@@ -36,7 +36,6 @@ app.configure(function() {
 	app.use(express.logger('dev'));
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
-  app.enable("jsonp callback");
 	app.use(express.cookieParser('8345t84y57t84t87y45th87y45t8y4538t7v58ntcyt3485t45ct87857tyv'));
 	app.use(express.session('4352084576294857v956984693487698347679486797832465274f5845'));
 	app.use(app.router);
@@ -51,7 +50,8 @@ app.configure('development', function() {
 
 // Define listing properties
 var listing_properties = {
-	name: String,
+  type: { type: String, default: 'listing' },
+	name: { type: String, default: '' },
 	min: { type: Number, default: 500 },
 	max: { type: Number, default: 2500 }
 }
@@ -59,15 +59,6 @@ var listing_properties = {
 var listingSchema = new Schema( listing_properties );
 // Define Listing Model from schema
 var listingModel = mongoose.model( 'Listing', listingSchema );
-
-
-// Enable cross domain requests ?
-/*app.all('/api', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-});*/
-
 
 app.get('/', routes.index);
 
@@ -80,12 +71,9 @@ app.get('/api', function (req, res) {
 
 // List listings
 app.get('/api/listings', function (req, res) {
-  res.header('Content-Type', 'application/json');
-  res.header('Charset', 'utf-8');
-
   return listingModel.find(function (err, listings) {
     if (!err) {
-      return res.send(req.query.callback + '(' + listings + ');');
+      return res.send( listings );
     } else {
       return console.log(err);
     }
@@ -117,12 +105,13 @@ app.get('/api/listings/:id', function (req, res) {
 
 // POST to CREATE
 app.post('/api/listings', function (req, res) {
-	var listing;
-	console.log("POST: ");
-	console.log(req.body);
-	listing = new listingModel({
-		name: req.body.name
+	var listing = new listingModel({
+    type: req.body.type,
+    name: req.body.name,
+    min: req.body.min,
+		max: req.body.max
 	});
+
 	listing.save(function (err) {
 		if (!err) {
 			return console.log("created");
@@ -165,7 +154,10 @@ app.post('/api/listings', function (req, res) {
 // Single update
 app.put('/api/listings/:id', function (req, res) {
   return listingModel.findById(req.params.id, function (err, listing) {
+    listing.type = req.body.type;
     listing.name = req.body.name;
+    listing.min = req.body.min;
+    listing.max = req.body.max;
     return listing.save(function (err) {
       if (!err) {
         console.log("updated");
