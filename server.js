@@ -36,6 +36,7 @@ app.configure(function() {
 	app.use(express.logger('dev'));
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
+  app.enable("jsonp callback");
 	app.use(express.cookieParser('8345t84y57t84t87y45th87y45t8y4538t7v58ntcyt3485t45ct87857tyv'));
 	app.use(express.session('4352084576294857v956984693487698347679486797832465274f5845'));
 	app.use(app.router);
