@@ -62,7 +62,9 @@ var listingModel = mongoose.model( 'Listing', listingSchema );
 
 
 // Enable cross domain requests
-app.all('/', function(req, res, next) {
+app.all('/api', function(req, res, next) {
+  res.header('Content-Type', 'application/json');
+  res.header('Charset', 'utf-8');
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
@@ -156,7 +158,7 @@ app.put('/api/listings/:id', function (req, res) {
 app.get('/api/listings', function (req, res) {
   return listingModel.find(function (err, listings) {
     if (!err) {
-      return res.send(listings);
+      return res.send(req.query.callback + '(' + listings + ');');
     } else {
       return console.log(err);
     }

@@ -7,12 +7,19 @@ Listing.prototype.save = function( callback ) {
 
 // Cross domain requests
 function xdr( uri, callback ) {  
-    // Pass a defined function to prevent cache-busting.  
+/*    // Pass a defined function to prevent cache-busting.  
     $.getJSON( uri, xdr_callback );  
     
     function xdr_callback(data) {
         callback( data );
-    }  
+    }*/
+    $.ajax({
+        dataType: 'jsonp',
+        // data: "somedata=blahblah",
+        jsonp: 'callback',
+        url: uri,
+        success: callback
+    });
 }  
 
 $(function() {
