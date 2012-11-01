@@ -63,8 +63,6 @@ var listingModel = mongoose.model( 'Listing', listingSchema );
 
 // Enable cross domain requests
 app.all('/api', function(req, res, next) {
-  res.header('Content-Type', 'application/json');
-  res.header('Charset', 'utf-8');
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
@@ -76,6 +74,45 @@ app.get('/', routes.index);
 // REST API
 app.get('/api', function (req, res) {
   res.send('API is running');
+});
+
+// GET to READ
+
+// List listings
+app.get('/api/listings', function (req, res) {
+  res.header('Content-Type', 'application/json');
+  res.header('Charset', 'utf-8');
+
+  return listingModel.find(function (err, listings) {
+    if (!err) {
+      return res.send(req.query.callback + '(' + listings + ');');
+    } else {
+      return console.log(err);
+    }
+  });
+});
+
+// =====================  Bulk destroy all listings ======================== TEMP
+app.get('/api/listings/reset', function (req, res) {
+  listingModel.remove(function (err) {
+    if (!err) {
+      console.log("removed");
+      return res.redirect('/');
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+// Single listing
+app.get('/api/listings/:id', function (req, res) {
+  return listingModel.findById(req.params.id, function (err, listing) {
+    if (!err) {
+      return res.send(listing);
+    } else {
+      return console.log(err);
+    }
+  });
 });
 
 // POST to CREATE
@@ -94,18 +131,6 @@ app.post('/api/listings', function (req, res) {
 		}
 	});
 	return res.send(listing);
-});
-
-// =====================  Bulk destroy all listings
-app.get('/api/listings/reset', function (req, res) {
-  listingModel.remove(function (err) {
-    if (!err) {
-      console.log("removed");
-      return res.redirect('/');
-    } else {
-      console.log(err);
-    }
-  });
 });
 
 // PUT to UPDATE
@@ -149,30 +174,6 @@ app.put('/api/listings/:id', function (req, res) {
       }
       return res.send(listing);
     });
-  });
-});
-
-// GET to READ
-
-// List listings
-app.get('/api/listings', function (req, res) {
-  return listingModel.find(function (err, listings) {
-    if (!err) {
-      return res.send(req.query.callback + '(' + listings + ');');
-    } else {
-      return console.log(err);
-    }
-  });
-});
-
-// Single listing
-app.get('/api/listings/:id', function (req, res) {
-  return listingModel.findById(req.params.id, function (err, listing) {
-    if (!err) {
-      return res.send(listing);
-    } else {
-      return console.log(err);
-    }
   });
 });
 
