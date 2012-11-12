@@ -1,5 +1,7 @@
 $(function() {
 
+    window.postMessage('listings-service says hi', '*');
+
     window.addEventListener('message', function(e) {
         var data = e.data;
         console.log(data);
