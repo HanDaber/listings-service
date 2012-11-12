@@ -1,2 +1,4 @@
 .template { display: none; }
 .listing { background: #dedede; }
+
+iframe { border: 1px solid black; }
