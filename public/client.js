@@ -1,13 +1,9 @@
 $(function() {
 
-    var f = parent.document.getElementsByClassName('embed-container')[0];
-    
-    var fragment = document.createDocumentFragment();
-
-    var heading = fragment.appendChild(document.createElement('h1'));
-    heading.appendChild(document.createTextNode('BAWLLZ'));
-
-    f.appendChild( fragment );
+    window.addEventListener('message', function(e) {
+        var data = e.data;
+        console.log(data);
+    }, false);
 
     function Manager( element ) {
         this.element = element;
