@@ -8,7 +8,6 @@ html
 	body
 		div
 			h1= 'Listings'
-			a(href="/api/listings/reset") RESET
 			hr
 
 			form(action="", method="", name="add_listing")
@@ -21,8 +20,18 @@ html
 		div(class="listings")
 			ul
 				li(class="listing template")
+					span(class="price") Price:
+						hr
+						span(class="min")
+						span -
+						span(class="max")
 					h3(class="name")
 					h6(class="type")
+
+		hr
+		div
+			div= 'Admin:'
+			a(href="/api/listings/reset") DELETE ALL
 
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
 		script(src="client.js")

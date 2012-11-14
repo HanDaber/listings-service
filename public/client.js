@@ -1,12 +1,6 @@
 $(function() {
 
-    window.postMessage('listings-service says hi', '*');
-
-    window.addEventListener('message', function(e) {
-        var data = e.data;
-        console.log(data);
-    }, false);
-
+    // Define the Manager object
     function Manager( element ) {
         this.element = element;
     }
@@ -15,13 +9,22 @@ $(function() {
             callback( this );
         },
         'append': function( obj ) {
-            var elem = $_listing.clone().removeClass('template');
+            var $_elem = $_listing.clone().removeClass('template');
 
-            elem.find('.name').append( obj.name );
-            elem.find('.type').append( obj.type );
+            $_elem.find('.name').append( obj.name );
+            $_elem.find('.type').append( obj.type );
+            $_elem.find('.price').find('.min').append( obj.min );
+            $_elem.find('.price').find('.max').append( obj.max );
             
-            $_listings.append( elem );
+            $_listings.append( $_elem );
         }
+    }
+
+    function clear_form( $_elem ) {
+        $_elem.find( "input[name=listing_name]" ).val('');
+        $_elem.find( "input[name=listing_type]" ).val('');
+        $_elem.find( "input[name=listing_min]" ).val('');
+        $_elem.find( "input[name=listing_max]" ).val('');
     }
 
 	// $_name denotes that name is an HTMLElement
@@ -40,11 +43,12 @@ $(function() {
 	$("form[name=add_listing]").on('submit', function( event ) {
     	
     	event.preventDefault();
+        var $_elem = $(this);
 
-        var name = $(this).find( "input[name=listing_name]" ).val(),
-            type = $(this).find( "input[name=listing_type]" ).val(),
-            min = $(this).find( "input[name=listing_min]" ).val(),
-            max = $(this).find( "input[name=listing_max]" ).val();
+        var name = $_elem.find( "input[name=listing_name]" ).val(),
+            type = $_elem.find( "input[name=listing_type]" ).val(),
+            min = $_elem.find( "input[name=listing_min]" ).val(),
+            max = $_elem.find( "input[name=listing_max]" ).val();
 
         var new_listing = { 'type': type, 'name': name, 'min': min, 'max': max };
 
@@ -52,5 +56,9 @@ $(function() {
             //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
             manager.append( data );
         });
+
+        clear_form( $_elem );
+
+        return false;
 	});
 });

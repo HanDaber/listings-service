@@ -1,31 +1,18 @@
-
 /**
  * Module dependencies.
  */
 
-var express = require('express')
-  , path = require('path')
-  , http = require('http')
-  , routes = require('./routes')
-  , u = require('underscore')
-  , mongoose = require('mongoose')
-  , Schema = mongoose.Schema;
+var express = require('express'),
+  path = require('path'),
+  http = require('http'),
+  db = require('./db'),
+  listingModel = require('./listing_model'),
+  cityModel = require('./city_model'),
+  routes = require('./routes'),
+  api = require('./routes/api');
 
 // Configure express
 var app = express();
-
-var db_host, db_name;
-
-// Connect to db depending on environment
-if (process.env.MONGOHQ_URL) {
-	console.log(process.env.MONGOHQ_URL);
-	db_host = process.env.MONGOHQ_URL;
-} else {
-	console.log('using local db\n');
-	db_host = 'localhost';
-	db_name = 'cl-scraper-03';
-}
-mongoose.connect(db_host, db_name);
 
 app.configure(function() {
 	app.set('port', process.env.PORT || 3000);
@@ -46,39 +33,14 @@ app.configure('development', function() {
 	app.use(express.errorHandler());
 });
 
-
-
-// Define listing properties
-var listing_properties = {
-  type: { type: String, default: 'listing' },
-	name: { type: String, default: '' },
-	min: { type: Number, default: 500 },
-	max: { type: Number, default: 2500 }
-}
-// Define Listing schema
-var listingSchema = new Schema( listing_properties );
-// Define Listing Model from schema
-var listingModel = mongoose.model( 'Listing', listingSchema );
-
+// Web routes
 app.get('/', routes.index);
 
 // REST API
-app.get('/api', function (req, res) {
-  res.send('API is running');
-});
+app.get('/api', api.test);
 
-// GET to READ
-
-// List listings
-app.get('/api/listings', function (req, res) {
-  return listingModel.find(function (err, listings) {
-    if (!err) {
-      return res.send( listings );
-    } else {
-      return console.log(err);
-    }
-  });
-});
+// All listings
+app.get('/api/listings', api.all_listings);
 
 // =====================  Bulk destroy all listings ======================== TEMP
 app.get('/api/listings/reset', function (req, res) {
@@ -93,36 +55,16 @@ app.get('/api/listings/reset', function (req, res) {
 });
 
 // Single listing
-app.get('/api/listings/:id', function (req, res) {
-  return listingModel.findById(req.params.id, function (err, listing) {
-    if (!err) {
-      return res.send(listing);
-    } else {
-      return console.log(err);
-    }
-  });
-});
+app.get('/api/listings/:id', api.one_listing);
 
-// POST to CREATE
-app.post('/api/listings', function (req, res) {
-	var listing = new listingModel({
-    type: req.body.type,
-    name: req.body.name,
-    min: req.body.min,
-		max: req.body.max
-	});
+// Create a listing
+app.post('/api/listings', api.create_listing);
 
-	listing.save(function (err) {
-		if (!err) {
-			return console.log("created");
-		} else {
-			return console.log(err);
-		}
-	});
-	return res.send(listing);
-});
+// Update one listing
+app.put('/api/listings/:id', api.update_listing);
 
-// PUT to UPDATE
+// Delete one listing
+app.delete('/api/listings/:id', api.delete_listing);
 
 // Bulk update
 /*app.put('/api/listings', function (req, res) {
@@ -151,39 +93,8 @@ app.post('/api/listings', function (req, res) {
     return res.send(req.body.listings);
 });*/
 
-// Single update
-app.put('/api/listings/:id', function (req, res) {
-  return listingModel.findById(req.params.id, function (err, listing) {
-    listing.type = req.body.type;
-    listing.name = req.body.name;
-    listing.min = req.body.min;
-    listing.max = req.body.max;
-    return listing.save(function (err) {
-      if (!err) {
-        console.log("updated");
-      } else {
-        console.log(err);
-      }
-      return res.send(listing);
-    });
-  });
-});
 
-// DELETE to DESTROY
 
-// remove a single listing
-app.delete('/api/listings/:id', function (req, res) {
-  return listingModel.findById(req.params.id, function (err, listing) {
-    return listing.remove(function (err) {
-      if (!err) {
-        console.log("removed");
-        return res.send('');
-      } else {
-        console.log(err);
-      }
-    });
-  });
-});
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log("Express server listening on port " + app.get('port'));

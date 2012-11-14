@@ -1,4 +1,6 @@
 .template { display: none; }
 .listing { background: #dedede; }
+.listing .price { float: right; display: inline-block; height: 1.2em; background: #eee; }
+.listing .price span { margin: 0 0.2em; }
 
 iframe { border: 1px solid black; }
