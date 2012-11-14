@@ -1,5 +1,9 @@
 $(function() {
 
+    // $_name denotes that name is an HTMLElement
+    var $_listings = $('.listings').find('ul'),
+        $_listing = $_listings.find('.template');
+
     // Define the Manager object
     function Manager( element ) {
         this.element = element;
@@ -9,7 +13,7 @@ $(function() {
             callback( this );
         },
         'append': function( obj ) {
-            var $_elem = $_listing.clone().removeClass('template');
+            var $_elem = new_from_template( $_listing );
 
             $_elem.find('.name').append( obj.name );
             $_elem.find('.type').append( obj.type );
@@ -21,17 +25,18 @@ $(function() {
     }
 
     function clear_form( $_elem ) {
-        $_elem.find( "input[name=listing_name]" ).val('');
-        $_elem.find( "input[name=listing_type]" ).val('');
-        $_elem.find( "input[name=listing_min]" ).val('');
-        $_elem.find( "input[name=listing_max]" ).val('');
+        $_elem.find( "input" ).val('');
     }
 
-	// $_name denotes that name is an HTMLElement
-	var $_listings = $('.listings').find('ul'),
-        $_listing = $_listings.find('.template'),
-        manager = new Manager( $_listings );
+    function new_from_template( $_elem ) {
+        return $_elem.clone().removeClass('template');
+    }
 
+
+
+
+    var manager = new Manager( $_listings ),
+        listing_form = $("form[name=add_listing_form]");
 
     $.get("/api/listings", function(data, textStatus, jqXHR) {
         //console.log("Get resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
@@ -40,7 +45,7 @@ $(function() {
         }
     });
 
-	$("form[name=add_listing]").on('submit', function( event ) {
+	listing_form.on('submit', function( event ) {
     	
     	event.preventDefault();
         var $_elem = $(this);
@@ -61,4 +66,5 @@ $(function() {
 
         return false;
 	});
+    
 });

@@ -83,6 +83,10 @@ var Scraper = {
 	}
 }
 
+exports.pages = function() {
+	return "<html>...</html>";
+};
+
 // Retrieve all listings and then scrape
 exports.go = function( callback ) {	
 	return listingModel.find(function ( err, data) {

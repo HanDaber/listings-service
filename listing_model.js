@@ -4,10 +4,10 @@ var mongoose = require('mongoose'),
 // ######## LISTING #######################################################
 // Define listing properties
 var listing_properties = {
-  type: { type: String, default: 'listing' },
-	name: { type: String, default: '' },
-	min: { type: Number, default: 500 },
-	max: { type: Number, default: 2500 }
+  	'type': { type: String, default: 'listing' },
+	'name': { type: String, default: 'none' },
+	'min': { type: Number, default: 500 },
+	'max': { type: Number, default: 2500 }
 }
 // Define Listing schema
 var listingSchema = new Schema( listing_properties );

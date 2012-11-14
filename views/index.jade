@@ -7,15 +7,19 @@ html
 
 	body
 		div
-			h1= 'Listings'
+			h1= 'Listing Manager'
 			hr
 
-			form(action="", method="", name="add_listing")
-				input(type="text", name="listing_type", placeholder="Listing Type")
-				input(type="text", name="listing_name", placeholder="Listing Name")
-				input(type="text", name="listing_min", placeholder="Minimum: $500")
-				input(type="text", name="listing_max", placeholder="Maximum: $2500")
-				input(type="submit", value="Add")
+			form(action="", method="", name="add_listing_form", id="add_listing")
+				fieldset
+					legend= 'Add a Listing'
+					input(type="text", name="listing_type", placeholder="Listing Type")
+					input(type="text", name="listing_name", placeholder="Listing Name", autofocus)
+					br
+					input(type="number", name="listing_min", placeholder="Minimum: $500")
+					input(type="number", name="listing_max", placeholder="Maximum: $2500")
+					br
+					input(type="submit", value="Add")
 
 		div(class="listings")
 			ul

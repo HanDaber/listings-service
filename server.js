@@ -9,7 +9,8 @@ var express = require('express'),
   listingModel = require('./listing_model'),
   cityModel = require('./city_model'),
   routes = require('./routes'),
-  api = require('./routes/api');
+  listing_api = require('./routes/listing_api'),
+  city_api = require('./routes/city_api');
 
 // Configure express
 var app = express();
@@ -37,10 +38,10 @@ app.configure('development', function() {
 app.get('/', routes.index);
 
 // REST API
-app.get('/api', api.test);
+app.get('/api', listing_api.test);
 
 // All listings
-app.get('/api/listings', api.all_listings);
+app.get('/api/listings', listing_api.all_listings);
 
 // =====================  Bulk destroy all listings ======================== TEMP
 app.get('/api/listings/reset', function (req, res) {
@@ -55,16 +56,16 @@ app.get('/api/listings/reset', function (req, res) {
 });
 
 // Single listing
-app.get('/api/listings/:id', api.one_listing);
+app.get('/api/listings/:id', listing_api.one_listing);
 
 // Create a listing
-app.post('/api/listings', api.create_listing);
+app.post('/api/listings', listing_api.create_listing);
 
 // Update one listing
-app.put('/api/listings/:id', api.update_listing);
+app.put('/api/listings/:id', listing_api.update_listing);
 
 // Delete one listing
-app.delete('/api/listings/:id', api.delete_listing);
+app.delete('/api/listings/:id', listing_api.delete_listing);
 
 // Bulk update
 /*app.put('/api/listings', function (req, res) {
@@ -94,6 +95,10 @@ app.delete('/api/listings/:id', api.delete_listing);
 });*/
 
 
+
+app.get('/api/cities', city_api.all_cities);
+
+app.post('/api/cities', city_api.create_city);
 
 
 http.createServer(app).listen(app.get('port'), function(){
