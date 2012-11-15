@@ -43,9 +43,19 @@ app.get('/api', listing_api.test);
 // All listings
 app.get('/api/listings', listing_api.all_listings);
 
-// =====================  Bulk destroy all listings ======================== TEMP
+// =====================  Bulk destroy all ======================== TEMP
 app.get('/api/listings/reset', function (req, res) {
   listingModel.remove(function (err) {
+    if (!err) {
+      console.log("removed");
+      return res.redirect('/');
+    } else {
+      console.log(err);
+    }
+  });
+});
+app.get('/api/cities/reset', function (req, res) {
+  cityModel.remove(function (err) {
     if (!err) {
       console.log("removed");
       return res.redirect('/');

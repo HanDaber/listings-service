@@ -25,18 +25,23 @@ $(function() {
     }
 
     function clear_form( $_elem ) {
-        $_elem.find( "input" ).val('');
+        $_elem.find( "input[type!=submit]" ).val('');
     }
 
     function new_from_template( $_elem ) {
         return $_elem.clone().removeClass('template');
     }
 
+    function find_form( name ) {
+        return $("form[name=" + name + "]");
+    }
 
 
 
     var manager = new Manager( $_listings ),
-        listing_form = $("form[name=add_listing_form]");
+        listing_form = find_form('listings'),
+        cities_form = find_form('cities'),
+        $_cities = cities_form.find('ul');
 
     $.get("/api/listings", function(data, textStatus, jqXHR) {
         //console.log("Get resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
@@ -66,5 +71,33 @@ $(function() {
 
         return false;
 	});
+
+
+    // LOTS OF COPYPASTA EVERYWHERE --- REFACTOR THIS SHIT, MAN --- 
+
+    $.get("/api/cities", function(data, textStatus, jqXHR) {
+        for( key in data ) {
+            $_cities.append('<li>'+ data[key].name +'</li>');
+        }
+    });
+
+    cities_form.on('submit', function( event ) {
+        
+        event.preventDefault();
+        var $_elem = $(this);
+
+        var name = $_elem.find( "input[name=city_name]" ).val();
+
+        var new_city = { 'name': name };
+
+        $.post("/api/cities", new_city, function(data, textStatus, jqXHR) {
+            //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
+            $_cities.append('<li>'+ data.name +'</li>');
+        });
+
+        clear_form( $_elem );
+
+        return false;
+    });
     
 });

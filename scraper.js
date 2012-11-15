@@ -1,19 +1,20 @@
 // Require modules
 var u = require('underscore'),
-	scraper = require('scraper'),
-	db = require('./db'),
+	scrape = require('scraper'),
 	listingModel = require('./listing_model'),
-	cityModel = require('./city_model');
+	cityModel = require('./city_model'),
+	request = require('request');
 
-var	all_query_strs = [];
 
-function make_query_strings( listing_arry ) {
+
+function make_query_strings( listing_arry, cities_array ) {
 
 	// Cities to search in
-	var cities = ['sfbay', 'sandiego'];
+	// var cities = ['sfbay', 'sandiego'];
 	
 	// Make an array of search strings for cl
-	var cl_query_strs = [];
+	var cl_query_strs = [],
+		all_query_strs = [];
 
 	// Fill the query_strs array with values from listings in the listings_arry
 	function fill_queries(c) {
@@ -23,24 +24,17 @@ function make_query_strings( listing_arry ) {
 	}
 
 	// For each city, generate a query string of each listing in listing_arry
-	u.each( cities, function(city) { fill_queries(city); } );
+	u.each( cities_array, function(city) { fill_queries(city); } );
 
 	// Make one for ebay
 /*	var eb_query_strs = [];
-	u.each(
-		listings_array,
-		function(l) {
-			var temp = new Listing();
-			temp.name = l.name;
-			temp.min = l.min;
-			temp.max = l.max;
-			eb_query_strs.push( temp.eb_query() );
-	});*/
+*/
 
 	// all_query_strs = cl_query_strs.concat(eb_query_strs);
 	all_query_strs = cl_query_strs;
 
-	console.log( all_query_strs );
+	// console.log( all_query_strs );
+	return all_query_strs;
 }
 
 var Scraper = {
@@ -70,54 +64,48 @@ var Scraper = {
 	},
 
 	'scrape': function( query_str_array, callback ) {
-		var bodyHTML;
-
-		scraper( query_str_array, function( err, $ ) {
-			if (err) {
-				throw err;
-			} else {
-				bodyHTML = $('body');
-				callback( bodyHTML );
-			}
-		}, { 'reqPerSec': 4 });
+		scrape( query_str_array, callback, { 'reqPerSec': 4 });
 	}
 }
 
-exports.pages = function() {
-	return "<html>...</html>";
-};
+function api_req( resource, callback ) {
+	request('http://localhost:3000/api/'+resource, callback);
+}
 
-// Retrieve all listings and then scrape
-exports.go = function( callback ) {	
-	return listingModel.find(function ( err, data) {
-		callback(err, data);
-		db.connection.close();
-	});
-};
+function log_element( elem, i ) {
+	console.log( i + ': ' + elem.text().trim() );
+}
 
-var bodies = exports.go(function (err, listings) {
-	if (err) {
+function handle_document(err, $) {
+	if(err) {
 		console.log(err);
 	} else {
-		
-		var listings_array = [],
-			bodies_array = [];
-
-		u.each(
-			listings,
-			function ( l ) {
-				listings_array.push( l );
-			}
-		);
-
-		make_query_strings( listings_array );
-
-		Scraper.scrape( all_query_strs, function ( body ) {
-			bodies_array.push( body );
+		$('#toc_rows .ban b').each(function(index, elem) {
+			log_element($(this), index);
 		});
-
-		return bodies_array;
 	}
-});
+}
 
-console.log( bodies.length );
+function setup_scraper(error, response, body) {
+	if (!error && response.statusCode == 200) {
+		// response is in string format
+		var c = u.map(JSON.parse(body), function(e) { return e.name; });
+
+		api_req('listings', function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+
+				var l = JSON.parse(body),
+					strs = make_query_strings( l, c );
+
+				Scraper.scrape(strs, handle_document);
+			}
+		});
+	}
+}
+
+function get_cities() {
+	api_req('cities', setup_scraper);	
+}
+
+get_cities();
+

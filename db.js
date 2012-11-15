@@ -6,6 +6,7 @@ if (process.env.MONGOHQ_URL) {
 	console.log('MONGOHQ_URL: ' + process.env.MONGOHQ_URL );
 	db_host = process.env.MONGOHQ_URL;
 } else {
+	mongoose.set('deug', true);
 	console.log('using LOCAL db\n');
 	db_host = 'localhost';
 	db_name = 'cl-scraper-03';
