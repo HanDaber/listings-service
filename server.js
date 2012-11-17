@@ -36,6 +36,7 @@ app.configure('development', function() {
 
 // Web routes
 app.get('/', routes.index);
+app.post('/scrape', routes.scrape);
 
 // REST API
 app.get('/api', listing_api.test);
