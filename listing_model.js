@@ -15,27 +15,3 @@ var listingSchema = new Schema( listing_properties );
 var listingModel = mongoose.model( 'Listing', listingSchema );
 
 module.exports = listingModel;
-/*module.exports = {
-	'model': function() {
-		return listingModel;
-	},
-	'all': function( callback ) {
-
-		var arr = [];
-
-		listingModel.find(function (err, listings) {
-			if ( err ) {
-				console.log( err );
-			} else {
-				arr.push( listings );
-			}
-		});
-
-		return arr;
-	}
-};
-
-var a = module.exports.all(function ( listing ) {
-	return listings;
-});
-console.log(a);*/

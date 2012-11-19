@@ -1,8 +1,10 @@
 doctype 5
 html
 	head
-		title= 'Listing Manager'
+		meta(charset="utf-8")
 		meta(name='viewport', content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;")
+		title= 'Listing Manager'
+		link(rel="stylesheet", type="text/css", href="bootstrap/css/bootstrap-responsive.min.css")
 		link(rel="stylesheet", type="text/css", href="styles.css")
 
 	body
@@ -21,9 +23,9 @@ html
 					br
 					input(type="submit", value="Add")
 
-			form(action="", method="", name="cities", id="add_city")
+			form(action="", method="", name="cities", id="add_city", class="template")
 				fieldset
-					legend= 'Add a city'
+					legend= 'Add cities'
 					ul
 					input(type="text", name="city_name", placeholder="city Name")
 					br
