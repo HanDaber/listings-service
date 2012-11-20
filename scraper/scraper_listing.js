@@ -28,7 +28,7 @@ Listing.prototype = {
 			temp = u.map( base_urls, url_string );
 
 		function url_string( base ) {
-			return encodeURI( base + 'search/sss?query=' + self.name + '&srchType=A' + '&minAsk=' + self.min + '&maxAsk=' + self.max );
+			return encodeURI( base + 'search/sss?query=' + self.name + '&srchType=T' + '&minAsk=' + self.min + '&maxAsk=' + self.max );
 		}
 
 		return temp;
