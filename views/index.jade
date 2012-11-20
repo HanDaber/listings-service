@@ -14,17 +14,19 @@ html
 				div.span3
 					h1= 'Console'
 
-					form(action="", method="", name="listings", id="add_listing")
+					form.form-inline#add_listing(action="", method="", name="listings")
 						fieldset
 							legend= 'Add a Listing'
-							input(type="hidden", name="listing_type", value="sss")
+							input(type="hidden", name="listing_type", value="for sale")
 							input(type="text", name="listing_name", placeholder="Item Name", autofocus)
 							br
 							input(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
+							br
 							input(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
 							br
-							button.btn(type="submit")
+							button.btn.btn-primary
 								i.icon-plus
+								strong= " Add"
 
 					form.template(action="", method="", name="cities", id="add_city")
 						fieldset
@@ -36,11 +38,36 @@ html
 
 				div.span8.offset1.listings
 					h1= 'Listings'
+
+					table.table.table-striped
+						caption= "Your Listings"
+						thead
+							tr
+								th="Name"
+								th="Price Range"
+								th.pull-right="Edit"
+						tbody
+							tr
+								td
+									h5= "Honda Civic"
+								td
+									span= "$"
+									span= "0"
+									span= " - "
+									span= "$"
+									span= "400"
+
+								td
+									div.btn-group.pull-right
+										button.btn.btn-info
+											i.icon-edit
+										button.btn.btn-danger
+											i.icon-remove
 					
-					div.row.listing
+					div.row.listing.template
 						div.span4
-							h3.name= "efwefwefwef"
-							h5.type= "efwefwefwef"
+							h3.name= "Honda Civic"
+							h5.type= "for sale"
 						div.span2
 							h5= "price"
 							div.row
