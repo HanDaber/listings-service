@@ -19,6 +19,8 @@ function Listing( properties ) {
 	this.name = properties.name;
 	this.min = properties.min;
 	this.max = properties.max;
+
+	this.category = 'sss';
 }
 Listing.prototype = {
 	// Scraper queries
@@ -28,7 +30,7 @@ Listing.prototype = {
 			temp = u.map( base_urls, url_string );
 
 		function url_string( base ) {
-			return encodeURI( base + 'search/sss?query=' + self.name + '&srchType=T' + '&minAsk=' + self.min + '&maxAsk=' + self.max );
+			return encodeURI( base + 'search/' + self.category + '?query=' + self.name + '&srchType=T' + '&minAsk=' + self.min + '&maxAsk=' + self.max );
 		}
 
 		return temp;

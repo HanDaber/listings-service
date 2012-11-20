@@ -4,48 +4,72 @@ html
 		meta(charset="utf-8")
 		meta(name='viewport', content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;")
 		title= 'Listing Manager'
+		link(rel="stylesheet", type="text/css", href="bootstrap/css/bootstrap.min.css")
 		link(rel="stylesheet", type="text/css", href="bootstrap/css/bootstrap-responsive.min.css")
 		link(rel="stylesheet", type="text/css", href="styles.css")
 
 	body
-		div
-			h1= 'Listing Manager'
+		div.container
+			div.row
+				div.span3
+					h1= 'Console'
+
+					form(action="", method="", name="listings", id="add_listing")
+						fieldset
+							legend= 'Add a Listing'
+							input(type="hidden", name="listing_type", value="sss")
+							input(type="text", name="listing_name", placeholder="Item Name", autofocus)
+							br
+							input(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
+							input(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
+							br
+							button.btn(type="submit")
+								i.icon-plus
+
+					form.template(action="", method="", name="cities", id="add_city")
+						fieldset
+							legend= 'Add cities'
+							ul
+							input(type="text", name="city_name", placeholder="city Name")
+							br
+							input.btn(type="submit", value="Add")
+
+				div.span8.offset1.listings
+					h1= 'Listings'
+					
+					div.row.listing
+						div.span4
+							h3.name= "efwefwefwef"
+							h5.type= "efwefwefwef"
+						div.span2
+							h5= "price"
+							div.row
+								div.span1.min= "min"
+								div.span1.max= "max"
+						div.span2
+							h5= "edit"
+							div.btn-group
+								button.btn.btn-info
+									i.icon-edit
+								button.btn.btn-danger
+									i.icon-remove
+
+
+						ul
+							li.template.listing
+								span(class="price") Price:
+									hr
+									span(class="min")
+									span -
+									span(class="max")
+								h3(class="name")
+								h6(class="type")
+
 			hr
-
-			form(action="", method="", name="listings", id="add_listing")
-				fieldset
-					legend= 'Add a Listing'
-					input(type="text", name="listing_type", placeholder="Listing")
-					input(type="text", name="listing_name", placeholder="Item Name", autofocus)
-					br
-					input(type="number", name="listing_min", value="500", min="0", max="999999", step="5")
-					input(type="number", name="listing_max", value="2500", min="0", max="999999", step="5")
-					br
-					input(type="submit", value="Add")
-
-			form(action="", method="", name="cities", id="add_city", class="template")
-				fieldset
-					legend= 'Add cities'
-					ul
-					input(type="text", name="city_name", placeholder="city Name")
-					br
-					input(type="submit", value="Add")
-
-		div(class="listings")
-			ul
-				li(class="listing template")
-					span(class="price") Price:
-						hr
-						span(class="min")
-						span -
-						span(class="max")
-					h3(class="name")
-					h6(class="type")
-
-		hr
-		div
-			div= 'Admin:'
-			a(href="/api/listings/reset") DELETE ALL
+			div.row
+				div= 'Admin:'
+				a(href="/api/listings/reset") DELETE ALL
 
 		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
+		script(src="bootstrap/js/bootstrap.min.js")
 		script(src="client.js")

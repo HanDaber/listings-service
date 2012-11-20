@@ -5,15 +5,17 @@
 }*/
 
 .template { display: none; }
-.listing { background: #dedede; }
+/*.listing { background: #dedede; }
 .listing .price { float: right; display: inline-block; height: 1.2em; margin-top: 0.2em; }
-.listing .price span { margin: 0 0.2em; }
+.listing .price span { margin: 0 0.2em; }*/
+
 /*
 div#cities { border: 1px solid #bbb; display: inline-block; }*/
 /*div#cities ul { float: left; padding-right: 1em; min-width: 1em; }*/
 
-form { 
+/*form { 
 	display: inline-block;
 	text-align: center;
 }
 form#add_city fieldset ul { display: inline-block; float: left; padding-right: 1em; font-size: 0.8em; }
+*/
