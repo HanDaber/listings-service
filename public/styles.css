@@ -19,3 +19,5 @@ div#cities { border: 1px solid #bbb; display: inline-block; }*/
 }*/
 
 .center { display: inline-block; margin-left: auto; margin-right: auto; }
+
+.listings table { margin-top: 1.5em; }
