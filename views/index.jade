@@ -3,7 +3,7 @@ html
 	head
 		meta(charset="utf-8")
 		meta(name='viewport', content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;")
-		title= 'Listing Manager'
+		title= 'Listing Manager - &#946;'
 		link(rel="stylesheet", type="text/css", href="bootstrap/css/bootstrap.min.css", media="screen")
 		link(rel="stylesheet", type="text/css", href="bootstrap/css/bootstrap-responsive.min.css", media="screen")
 		link(rel="stylesheet", type="text/css", href="styles.css")
@@ -11,86 +11,77 @@ html
 	body
 		div.container
 			div.row
-				div.span3
-					h1= 'Console'
+				div.span4.offset4
+					h3= 'Listing Manager - &#946;'
+			div.row
+				div.span4
 
-					form.form-inline#add_listing(action="", method="", name="listings")
-						fieldset
-							legend= 'Add a Listing'
-							input(type="hidden", name="listing_type", value="for sale")
-							input(type="text", name="listing_name", placeholder="Item Name", autofocus)
-							br
-							input(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
-							br
-							input(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
-							br
-							button.btn.btn-primary
-								i.icon-plus
-								strong= " Add"
+					div.tabbable
+						ul.nav.nav-tabs
+							li.active
+								a(href="#tab1", data-toggle="tab")= "Listings"
+							li
+								a(href="#tab2", data-toggle="tab")= "Settings"
 
-					form.template(action="", method="", name="cities", id="add_city")
-						fieldset
-							legend= 'Add cities'
-							ul
-							input(type="text", name="city_name", placeholder="city Name")
-							br
-							input.btn(type="submit", value="Add")
+						div.tab-content
+							div.tab-pane.active#tab1
+								form#add_listing(action="", method="", name="listings")
+									select.span4(name="listing_type")
+										option(value='for sale', selected='selected')= 'for sale'
+										option(value='housing')= 'housing'
+									input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
+									input.span4(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
+									input.span4(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
+									button.btn.btn-primary.center
+										i.icon-plus
+										strong= " Add"
 
-				div.span8.offset1.listings
-					h1= 'Listings'
+							div.tab-pane#tab2
+								form#add_city
+									label= 'add a default city'
+									div.input-append
+										input.span3(placeholder='city name')
+										button.btn
+											i.icon-arrow-right
+								br
+								form#email
+									label= 'email'
+									div.input-append
+										input.span3(placeholder='email@gmail.com')
+										button.btn
+											i.icon-ok
+
+
+				div.span8.listings
 
 					table.table.table-striped
-						caption= "Your Listings"
+						caption
+							h4= "Your Listings"
 						thead
 							tr
 								th="Name"
 								th="Price Range"
 								th.pull-right="Edit"
 						tbody
-							tr
+							tr.listing.template
 								td
-									h5= "Honda Civic"
-								td
+									h5.name
+									small.type
+								td.price
 									span= "$"
-									span= "0"
+									span.min
 									span= " - "
 									span= "$"
-									span= "400"
+									span.max
 
 								td
-									div.btn-group.pull-right
-										button.btn.btn-info
-											i.icon-edit
-										button.btn.btn-danger
-											i.icon-remove
-					
-					div.row.listing.template
-						div.span4
-							h3.name= "Honda Civic"
-							h5.type= "for sale"
-						div.span2
-							h5= "price"
-							div.row
-								div.span1.min= "min"
-								div.span1.max= "max"
-						div.span2
-							h5= "edit"
-							div.btn-group
-								button.btn.btn-info
-									i.icon-edit
-								button.btn.btn-danger
-									i.icon-remove
-
-
-						ul
-							li.template.listing
-								span(class="price") Price:
-									hr
-									span(class="min")
-									span -
-									span(class="max")
-								h3(class="name")
-								h6(class="type")
+									form.edit_listing
+										input.listing_id(type='hidden', name='_id', value='')
+										div.btn-group.pull-right
+											button.btn.btn-info
+												i.icon-edit
+											button.btn.btn-danger
+												i.icon-remove
 
 			hr
 			div.row

@@ -16,6 +16,6 @@ div#cities { border: 1px solid #bbb; display: inline-block; }*/
 /*form { 
 	display: inline-block;
 	text-align: center;
-}
-form#add_city fieldset ul { display: inline-block; float: left; padding-right: 1em; font-size: 0.8em; }
-*/
+}*/
+
+.center { display: inline-block; margin-left: auto; margin-right: auto; }

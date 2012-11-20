@@ -1,7 +1,7 @@
 $(function() {
 
     // $_name denotes that name is an HTMLElement
-    var $_listings = $('.listings').find('ul'),
+    var $_listings = $('.listings').find('tbody'),
         $_listing = $_listings.find('.template');
 
     // Define the Manager object
@@ -17,8 +17,9 @@ $(function() {
 
             $_elem.find('.name').append( obj.name );
             $_elem.find('.type').append( obj.type );
-            $_elem.find('.price').find('.min').append( obj.min );
-            $_elem.find('.price').find('.max').append( obj.max );
+            $_elem.find('.min').append( obj.min );
+            $_elem.find('.max').append( obj.max );
+            $_elem.find('input.listing_id').val( obj._id );
             
             $_listings.append( $_elem );
         }
@@ -40,7 +41,7 @@ $(function() {
 
     var manager = new Manager( $_listings ),
         listing_form = find_form('listings'),
-        cities_form = find_form('cities'),
+        cities_form = find_form('cities'),  // <=== ehhh....
         $_cities = cities_form.find('ul');
 
     $.get("/api/listings", function(data, textStatus, jqXHR) {
@@ -50,13 +51,13 @@ $(function() {
         }
     });
 
-	listing_form.on('submit', function( event ) {
+	listing_form.find('button').on('click', function( event ) {
     	
     	event.preventDefault();
-        var $_elem = $(this);
+        var $_elem = $(this).parent();
 
         var name = $_elem.find( "input[name=listing_name]" ).val(),
-            type = $_elem.find( "input[name=listing_type]" ).val(),
+            type = $_elem.find( "select[name=listing_type]" ).val(),
             min = $_elem.find( "input[name=listing_min]" ).val(),
             max = $_elem.find( "input[name=listing_max]" ).val();
 

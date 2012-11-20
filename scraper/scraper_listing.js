@@ -8,9 +8,9 @@ function Listing( properties ) {
 
 	// Overwrite defaults with properties that were passed in
 	var prop = u.defaults( properties, {
-		'type': 'default',
+		'type': 'for sale',
 		'name': '',
-		'min': 1,
+		'min': 0,
 		'max': 100
 	});
 
@@ -19,9 +19,8 @@ function Listing( properties ) {
 	this.name = properties.name;
 	this.min = properties.min;
 	this.max = properties.max;
-
-	this.category = 'sss';
 }
+
 Listing.prototype = {
 	// Scraper queries
 	'cl_queries': function( base_urls ) {
@@ -30,10 +29,14 @@ Listing.prototype = {
 			temp = u.map( base_urls, url_string );
 
 		function url_string( base ) {
-			return encodeURI( base + 'search/' + self.category + '?query=' + self.name + '&srchType=T' + '&minAsk=' + self.min + '&maxAsk=' + self.max );
+			return encodeURI( base + 'search/' + self.category() + '?query=' + self.name + '&srchType=T' + '&minAsk=' + self.min + '&maxAsk=' + self.max );
 		}
 
 		return temp;
+	},
+	'category': function() {
+		if( this.type === 'housing' ) { return 'hhh'; }
+		else { return 'sss'; }
 	}
 };
 

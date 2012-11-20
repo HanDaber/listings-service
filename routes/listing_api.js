@@ -31,9 +31,9 @@ exports.one_listing = function (req, res) {
 
 exports.create_listing = function (req, res) {
 	
-	var type = (req.body.type === '') ? 'listing' : req.body.type;
+	var type = (req.body.type === '') ? 'for sale' : req.body.type;
 	var name = (req.body.name === '') ? 'none' : req.body.name;
-	var min = (req.body.min === '') ? '500' : req.body.min;
+	var min = (req.body.min === '') ? '0' : req.body.min;
 	var max = (req.body.max === '') ? '2500' : req.body.max;
 	
 	var listing = new listingModel({
