@@ -16,7 +16,7 @@ Fragment.prototype = {
 			} else {
 
 				$('p.row').each(function(index, elem) {
-					self.list.push('<li>'+ $(this).text() +'</li>');
+					self.list.push('<div>'+ $(this).text() +'</div>');
 				});
 
 				self.count ++;

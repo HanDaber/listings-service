@@ -27,8 +27,10 @@ city_scraper.get_all_cities( 'ca', function ( err, $ ) {
 			base_urls.push( $(this).attr('href') );
 		});
 
-		listing_fetcher.fetch('listings', build_queries);
+		console.log('base_urls: ');
+		console.dir(base_urls);
 
+		listing_fetcher.fetch('listings', build_queries);
 	}
 });
 
@@ -49,6 +51,8 @@ function build_queries(error, response, body) {
 
 		var scraper_queries = u.flatten( urls ),
 			scraper = new Scraper( scraper_queries );
+
+		console.log('scraper_queries size: ' + scraper_queries.length + '. running scraper.');
 
 		run_scrape( scraper );
 
@@ -73,10 +77,11 @@ function run_scrape ( scraper ) {
 			}
 		},
 	    function (callback) {
-	    	console.log('scRaping (tm)...');
+	    	console.log('scraping...');
 	        setTimeout(callback, 2000);
 	    },
 	    function (err) {
+	    	console.log('building email...');
 	    	var body = '<ul>' + fragment.list.toString() + '</ul>';
 	    	mail( body );
 	    }

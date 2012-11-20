@@ -11,6 +11,8 @@ Fetcher.prototype = {
 		
 		var self = this;
 
+		console.log('fetching ' + resource + ' from api...');
+
 		request(self.base + resource, callback);
 
 	}

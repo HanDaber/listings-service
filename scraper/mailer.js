@@ -11,7 +11,7 @@ function Mailer ( email ) {
             to: email, // list of receivers
             subject: "latest scrape results", // Subject line
             text: "Hello", // plaintext body
-            html: "<b>"+body+"</b>" // html body
+            html: "<div>"+body+"</div>" // html body
         };
 
         // send mail with defined transport object
