@@ -73,10 +73,10 @@ app.get('/api/listings/:id', listing_api.one_listing);
 app.post('/api/listings', listing_api.create_listing);
 
 // Update one listing
-app.put('/api/listings/:id', listing_api.update_listing);
+app.post('/api/listings/update/:id', listing_api.update_listing);
 
 // Delete one listing
-app.delete('/api/listings/:id', listing_api.delete_listing);
+app.post('/api/listings/delete/:id', listing_api.delete_listing);
 
 // Bulk update
 /*app.put('/api/listings', function (req, res) {

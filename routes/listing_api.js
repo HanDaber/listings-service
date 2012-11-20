@@ -80,7 +80,7 @@ exports.delete_listing = function (req, res) {
 
 		return listing.remove(function (err) {
 			if (!err) {
-				res.send('');
+				res.send( listing );
 			} else {
 				console.log(err);
 			}

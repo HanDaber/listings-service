@@ -1,5 +1,7 @@
 $(function() {
 
+
+
     // $_name denotes that name is an HTMLElement
     var $_listings = $('.listings').find('tbody'),
         $_listing = $_listings.find('.template');
@@ -20,6 +22,7 @@ $(function() {
             $_elem.find('.min').append( obj.min );
             $_elem.find('.max').append( obj.max );
             $_elem.find('input.listing_id').val( obj._id );
+            $_elem.find('button').attr( 'id', obj._id );
             
             $_listings.append( $_elem );
         }
@@ -41,6 +44,7 @@ $(function() {
 
     var manager = new Manager( $_listings ),
         listing_form = find_form('listings'),
+
         cities_form = find_form('cities'),  // <=== ehhh....
         $_cities = cities_form.find('ul');
 
@@ -76,7 +80,7 @@ $(function() {
 
     // LOTS OF COPYPASTA EVERYWHERE --- REFACTOR THIS SHIT, MAN --- 
 
-    $.get("/api/cities", function(data, textStatus, jqXHR) {
+ /*   $.get("/api/cities", function(data, textStatus, jqXHR) {
         for( key in data ) {
             $_cities.append('<li>'+ data[key].name +'</li>');
         }
@@ -99,6 +103,24 @@ $(function() {
         clear_form( $_elem );
 
         return false;
+    });*/
+
+    var del_forms = $('form.edit_listing'),
+        del_btns = del_forms.find('button');
+
+    $_listings.on('click', 'button', function(event) {
+
+        event.preventDefault();
+
+        var _id = $(this).attr('id');
+
+        var p = $(this).parents('tr');
+
+        $.post("/api/listings/delete/"+_id, _id, function(data, textStatus, jqXHR) {
+            //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
+            if( data._id && data._id == _id ) { p.remove(); }
+        });
+
     });
     
 });
