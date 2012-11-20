@@ -37,27 +37,18 @@ html
 										strong= " Add"
 
 							div.tab-pane#tab2
-								form#add_city
-									label= 'add a default city'
-									div.input-append
-										input.span3(placeholder='city name')
-										button.btn
-											i.icon-arrow-right
+								form#location
+									label= 'Searching all cities in California'
 								br
 								form#email
-									label= 'email'
+									label= 'Default e-mail'
 									div.input-append
-										input.span3(placeholder='email@gmail.com')
+										input.span3(placeholder='default_email@gmail.com')
 										button.btn
 											i.icon-ok
 								br
 								form#interval
-									label= 'scrape frequency'
-									div.span2
-										input(type='range')
-										button.btn
-											i.icon-ok
-
+									label= 'Scrape frequency: 15 min.'
 
 				div.span7.offset1.listings
 
