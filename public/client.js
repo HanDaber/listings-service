@@ -114,8 +114,7 @@ $(function() {
         var email = $_elem.siblings('input[name=email]').val();
 
         $.post("/api/scrape", {'email': email}, function(data, textStatus, jqXHR) {
-            //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
-            
+            console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
         });
 
         scrape_form.append('<p>check your email in a few minutes</p>');

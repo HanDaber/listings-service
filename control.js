@@ -81,6 +81,12 @@ Controller.prototype = {
 };
 module.exports = Controller;
 
+if( process.argv[2] == '--run' ) {
+	var ctrl = new Controller();
+
+	ctrl.start();
+}
+
 
 function build_queries(error, response, body) {
 	if (!error && response.statusCode == 200) {
@@ -127,13 +133,9 @@ function run_scrape ( scraper ) {
 	    function (err) {
 	    	console.log('building email...');
 	    	
-	    	var body = [];
+	    	var body = fragment.compress();
 
-	    	body.push('<div>');
-
-	    	u.each( fragment.list, function (elem) { body.push( elem + '<br />' ) });
-
-	    	body.push('</div>');
+	    	// console.dir('farts.');
 
 	    	mail( body );
 	    }

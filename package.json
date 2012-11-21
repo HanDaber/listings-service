@@ -13,7 +13,8 @@
     "nodemailer": "*",
     "scraper": "*",
     "request": "*",
-    "async": "*"
+    "async": "*",
+    "sanitizer": "*"
   },
   "engines": {
     "node": "0.8.x",
