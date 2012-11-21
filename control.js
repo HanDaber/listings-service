@@ -8,6 +8,7 @@ var Mailer = require('./scraper/mailer'),
 	u = require('underscore');
 
 
+
 // initialize
 var mail = new Mailer('handaber@gmail.com'),
 	fragment = new Fragment(),
@@ -15,10 +16,39 @@ var mail = new Mailer('handaber@gmail.com'),
 	city_scraper = new Scraper();
 
 
+var base_urls = [
+	'http://sfbay.craigslist.org/',
+	'http://bakersfield.craigslist.org/',
+	'http://chico.craigslist.org/',
+	'http://fresno.craigslist.org/',
+	'http://goldcountry.craigslist.org/',
+	'http://hanford.craigslist.org/',
+	'http://humboldt.craigslist.org/',
+	'http://imperial.craigslist.org/',
+	'http://inlandempire.craigslist.org/',
+	'http://losangeles.craigslist.org/',
+	'http://mendocino.craigslist.org/',
+	'http://merced.craigslist.org/',
+	'http://modesto.craigslist.org/',
+	'http://monterey.craigslist.org/',
+	'http://orangecounty.craigslist.org/',
+	'http://palmsprings.craigslist.org/',
+	'http://redding.craigslist.org/',
+	'http://reno.craigslist.org/',
+	'http://sacramento.craigslist.org/',
+	'http://sandiego.craigslist.org/',
+	'http://slo.craigslist.org/',
+	'http://santabarbara.craigslist.org/',
+	'http://santamaria.craigslist.org/',
+	'http://siskiyou.craigslist.org/',
+	'http://stockton.craigslist.org/',
+	'http://susanville.craigslist.org/',
+	'http://ventura.craigslist.org/',
+	'http://visalia.craigslist.org/',
+	'http://yubasutter.craigslist.org/'
+];
 
-var base_urls = [];
-
-city_scraper.get_all_cities( 'ca', function ( err, $ ) {
+/*city_scraper.get_all_cities( 'ca', function ( err, $ ) {
 
 	if(err) { console.log(err) } 
 	else {
@@ -32,10 +62,24 @@ city_scraper.get_all_cities( 'ca', function ( err, $ ) {
 
 		listing_fetcher.fetch('listings', build_queries);
 	}
-});
+});*/
 
+function Controller( collection ) {
+	this.collection = collection;
+}
+Controller.prototype = {
+	'start': function ( email ) {
+		if( email ) { mail = new Mailer( email ) }
+		if( this.collection ) {
+			build_queries( null, {statusCode: 200}, JSON.stringify(this.collection) );
+		} else {
+			console.log('\n\n FETCHING LISTINGS FROM API \n\n');
 
-
+			listing_fetcher.fetch('listings', build_queries);
+		}
+	}
+};
+module.exports = Controller;
 
 
 function build_queries(error, response, body) {
@@ -82,29 +126,16 @@ function run_scrape ( scraper ) {
 	    },
 	    function (err) {
 	    	console.log('building email...');
-	    	var body = '<ul>' + fragment.list.toString() + '</ul>';
+	    	
+	    	var body = [];
+
+	    	body.push('<div>');
+
+	    	u.each( fragment.list, function (elem) { body.push( elem + '<br />' ) });
+
+	    	body.push('</div>');
+
 	    	mail( body );
 	    }
 	);
 }
-
-/*
-fragment.collect ( scraper );
-
-async.whilst(
-	function () {
-		if ( fragment.count < scraper.urls.length ) {
-			return true;
-		} else {
-			return false;
-		}
-	},
-    function (callback) {
-    	console.log('scRaping (tm)...');
-        setTimeout(callback, 2000);
-    },
-    function (err) {
-    	var body = '<ul>' + fragment.list.toString() + '</ul>';
-    	mail( body );
-    }
-);*/

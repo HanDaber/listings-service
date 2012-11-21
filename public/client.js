@@ -80,30 +80,6 @@ $(function() {
 
     // LOTS OF COPYPASTA EVERYWHERE --- REFACTOR THIS SHIT, MAN --- 
 
- /*   $.get("/api/cities", function(data, textStatus, jqXHR) {
-        for( key in data ) {
-            $_cities.append('<li>'+ data[key].name +'</li>');
-        }
-    });
-
-    cities_form.on('submit', function( event ) {
-        
-        event.preventDefault();
-        var $_elem = $(this);
-
-        var name = $_elem.find( "input[name=city_name]" ).val();
-
-        var new_city = { 'name': name };
-
-        $.post("/api/cities", new_city, function(data, textStatus, jqXHR) {
-            //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
-            $_cities.append('<li>'+ data.name +'</li>');
-        });
-
-        clear_form( $_elem );
-
-        return false;
-    });*/
 
     var del_forms = $('form.edit_listing'),
         del_btns = del_forms.find('button');
@@ -121,6 +97,28 @@ $(function() {
             if( data._id && data._id == _id ) { p.remove(); }
         });
 
+    });
+
+
+    var scrape_form = $('form#scrape'),
+        scrape_btn = scrape_form.find('button');
+
+    scrape_form.on('click', 'button', function( event ) {
+        
+        event.preventDefault();
+
+        var $_elem = $(this);
+
+        $_elem.addClass('disabled');
+
+        var email = $_elem.siblings('input[name=email]').val();
+
+        $.post("/api/scrape", {'email': email}, function(data, textStatus, jqXHR) {
+            //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
+            
+        });
+
+        scrape_form.append('<p>check your email in a few minutes</p>');
     });
     
 });

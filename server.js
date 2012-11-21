@@ -10,7 +10,8 @@ var express = require('express'),
   cityModel = require('./city_model'),
   routes = require('./routes'),
   listing_api = require('./routes/listing_api'),
-  city_api = require('./routes/city_api');
+  city_api = require('./routes/city_api'),
+  scraper_api = require('./routes/scraper_api');
 
 // Configure express
 var app = express();
@@ -36,16 +37,16 @@ app.configure('development', function() {
 
 // Web routes
 app.get('/', routes.index);
-app.post('/scrape', routes.scrape);
 
 // REST API
 app.get('/api', listing_api.test);
+app.post('/api/scrape', scraper_api.scrape);
 
 // All listings
 app.get('/api/listings', listing_api.all_listings);
 
 // =====================  Bulk destroy all ======================== TEMP
-app.get('/api/listings/reset', function (req, res) {
+/*app.get('/api/listings/reset', function (req, res) {
   listingModel.remove(function (err) {
     if (!err) {
       console.log("removed");
@@ -64,7 +65,7 @@ app.get('/api/cities/reset', function (req, res) {
       console.log(err);
     }
   });
-});
+});*/
 
 // Single listing
 app.get('/api/listings/:id', listing_api.one_listing);
@@ -113,5 +114,5 @@ app.post('/api/cities', city_api.create_city);
 
 
 http.createServer(app).listen(app.get('port'), function(){
-	console.log("Express server listening on port " + app.get('port'));
+  console.log("Express server listening on port " + app.get('port'));
 });

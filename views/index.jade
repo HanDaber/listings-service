@@ -39,13 +39,14 @@ html
 							div.tab-pane#tab2
 								form#location
 									label= 'Searching all cities in California'
+									input(type='hidden', value='within: X miles || state')
 								br
-								form#email
-									label= 'Default e-mail'
+								form#scrape
+									label= 'Scrape and send email now:'
 									div.input-append
-										input.span3(placeholder='default_email@gmail.com')
+										input.span3(type='email', placeholder='email address', name='email')
 										button.btn
-											i.icon-ok
+											i.icon-arrow-right
 								br
 								form#interval
 									label= 'Scrape frequency: 15 min.'
