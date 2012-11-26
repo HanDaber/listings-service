@@ -3,14 +3,19 @@ var listingModel = require('../listing_model'),
 
 exports.scrape = function (req, res) {
 
+	res.send( 'start' );
+
 	return listingModel.find(function (err, listings) {
 		if (!err && req.body.email) {
 
-			res.send( 'OK' );
-			
 			var scraper = new ScraperControl( listings );
 			
-			scraper.start(req.body.email);
+			(function () {
+				scraper.start( req.body.email );
+			})();
+
+			res.end( 'done' );
+
 		} else {
 			console.log(err);
 		}

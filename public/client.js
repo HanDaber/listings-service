@@ -81,8 +81,7 @@ $(function() {
     // LOTS OF COPYPASTA EVERYWHERE --- REFACTOR THIS SHIT, MAN --- 
 
 
-    var del_forms = $('form.edit_listing'),
-        del_btns = del_forms.find('button');
+    var del_forms = $('form.edit_listing');
 
     $_listings.on('click', 'button', function(event) {
 
@@ -100,24 +99,29 @@ $(function() {
     });
 
 
-    var scrape_form = $('form#scrape'),
-        scrape_btn = scrape_form.find('button');
+    var scrape_form = $('form#scrape');
 
     scrape_form.on('click', 'button', function( event ) {
         
         event.preventDefault();
 
-        var $_elem = $(this);
+        var $_elem = $(this),
+            email = $_elem.siblings('input[name=email]').val(),
+            msg = scrape_form.find('p');
 
         $_elem.addClass('disabled');
 
-        var email = $_elem.siblings('input[name=email]').val();
+        msg.html('scraping... check your email in a few minutes.');
 
         $.post("/api/scrape", {'email': email}, function(data, textStatus, jqXHR) {
             console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
+            if ( textStatus === 'success' ) {
+                setTimeout(function() {
+                    $_elem.removeClass('disabled');
+                    msg.html('');
+                }, 30000);
+            }
         });
-
-        scrape_form.append('<p>check your email in a few minutes</p>');
     });
     
 });

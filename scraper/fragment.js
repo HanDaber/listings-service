@@ -33,7 +33,7 @@ Fragment.prototype = {
 
 						var link = $_this.find('a').first().attr('href');
 
-						self.list += "<div style=" + "\"background:#eee;padding:8px;mragin:5px;border-bottom:1px solid #bbb\"" + ">";
+						self.list += "<div style=" + "\"background:#eee;padding:8px;mragin-top:8px;border-bottom:1px solid #bbb\"" + ">";
 						self.list += "<a href=\"" + link + "\">" + html + "</a>";
 						self.list += "</div>";
 					}

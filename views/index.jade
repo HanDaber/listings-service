@@ -3,7 +3,7 @@ html
 	head
 		meta(charset="utf-8")
 		meta(name='viewport', content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;")
-		title= 'Listing Manager - &#946;'
+		title= 'Listing Manager &#946;'
 		link(rel="stylesheet", type="text/css", href="bootstrap/css/bootstrap.min.css", media="screen")
 		link(rel="stylesheet", type="text/css", href="bootstrap/css/bootstrap-responsive.min.css", media="screen")
 		link(rel="stylesheet", type="text/css", href="styles.css", media="screen")
@@ -12,7 +12,9 @@ html
 		div.container
 			div.row
 				div.span4.offset4
-					h3= 'Listing Manager - &#946;'
+					h3.title= 'Listing Manager '
+						span= '&#946;'
+
 			div.row
 				div.span4
 
@@ -28,7 +30,7 @@ html
 								form#add_listing(action="", method="", name="listings")
 									select.span4(name="listing_type")
 										option(value='for sale', selected='selected')= 'for sale'
-										option(value='housing')= 'housing'
+										option(value='housing', disabled='disabled')= 'housing'
 									input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
 									input.span4(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
 									input.span4(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
@@ -47,6 +49,7 @@ html
 										input.span3(type='email', placeholder='email address', name='email')
 										button.btn
 											i.icon-arrow-right
+									p
 								br
 								form#interval
 									label= 'Scrape frequency: 15 min.'

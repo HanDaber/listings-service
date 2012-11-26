@@ -69,10 +69,17 @@ function Controller( collection ) {
 }
 Controller.prototype = {
 	'start': function ( email ) {
-		if( email ) { mail = new Mailer( email ) }
+
+		if( email ) { 
+			mail = new Mailer( email ) 
+		}
+		
 		if( this.collection ) {
+
 			build_queries( null, {statusCode: 200}, JSON.stringify(this.collection) );
+			
 		} else {
+
 			console.log('\n\n FETCHING LISTINGS FROM API \n\n');
 
 			listing_fetcher.fetch('listings', build_queries);

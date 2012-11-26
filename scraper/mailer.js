@@ -4,7 +4,7 @@ function Mailer ( email ) {
     // create reusable transport method (opens pool of SMTP connections) // TODO: secure credentials in db
     var smtpTransport = nodemailer.createTransport("SMTP",                                                                                                                                                                                                          {service:"Gmail",auth:{user:'handaber@gmail.com',pass:'!6infuckinsaniuM9'}});
 
-    return function( body ) {
+    return function ( body ) {
         // setup e-mail data with unicode symbols
         var mailOptions = {
             from: "listing-mailer", // sender address
