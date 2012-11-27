@@ -67,8 +67,12 @@ $(function() {
 
         var new_listing = { 'type': type, 'name': name, 'min': min, 'max': max };
 
+        $_listings.append("<tr id='roading'>Saving...</tr>");
+
         $.post("/api/listings", new_listing, function(data, textStatus, jqXHR) {
             //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
+            $_listings.find('#roading').remove();
+            
             manager.append( data );
         });
 
