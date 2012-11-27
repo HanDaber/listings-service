@@ -95,6 +95,10 @@ $(function() {
 
         var p = $(this).parents('tr');
 
+        p.css('color', '#bbb');
+        p.css('background', '#eee');
+        $(this).addClass('disabled');
+
         $.post("/api/listings/delete/"+_id, _id, function(data, textStatus, jqXHR) {
             //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
             if( data._id && data._id == _id ) { p.remove(); }
