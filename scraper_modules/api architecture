@@ -1,0 +1,35 @@
+// Define Listing
+var listing_properties += {
+  	'type'			: { type: String, 	default: 'for sale' },
+	'name'			: { type: String, 	default: 'none' },
+	'min'			: { type: Number, 	default: 0 },
+	'max'			: { type: Number, 	default: 2500 },
+	'cities'		: { type: Array },
+	'last_scrape'	: { type: Date },
+	'results'		: [ ResultSchema ]
+};
+
+var listing_methods += {
+	create(),
+	read(),
+	update(),
+	destroy(),
+	build_queries( template ) => this.cities.map( return filled_template; ),
+	scrape() => 
+};
+
+
+var result_properties = {
+	'href'	: { type: String },
+	'text'	: { type: String },
+	'date'	: { type: Date }
+};
+
+var result_methods = {
+
+};
+
+
+ListingModel.find( l ) each=> l.scrape( l.build_queries( cl_template ) ) => [ <Result>, ... ]::results.push()
+
+ListingModel.find( l ) each=> l.mail( l.results ), l.clear_results()

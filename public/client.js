@@ -67,11 +67,11 @@ $(function() {
 
         var new_listing = { 'type': type, 'name': name, 'min': min, 'max': max };
 
-        $("tr#roading").html("<div class='alert'>Saving...</div>");
+        $("tr#roading").html("<div class='alert'>Saving...</div>").fadeIn();
 
         $.post("/api/listings", new_listing, function(data, textStatus, jqXHR) {
             //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
-            $('tr#roading').html('');
+            $('tr#roading').fadeOut().html('');
 
             manager.append( data );
         });
@@ -97,11 +97,11 @@ $(function() {
 
         p.css('color', '#bbb');
         p.css('background', '#eee');
-        $(this).addClass('disabled');
+        $(this).addClass('disabled').off('click');
 
         $.post("/api/listings/delete/"+_id, _id, function(data, textStatus, jqXHR) {
             //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
-            if( data._id && data._id == _id ) { p.remove(); }
+            if( data._id && data._id == _id ) { p.fadeOut(); }
         });
 
     });
