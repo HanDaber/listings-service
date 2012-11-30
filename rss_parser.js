@@ -1,6 +1,8 @@
 var feedparser = require('feedparser');
 
-feedparser.parseUrl('http://sfbay.craigslist.org/search/sss?maxAsk=5&query=1999%20honda%20accord&srchType=T&format=rss').on('article', show);
+feedparser
+	.parseUrl('http://sfbay.craigslist.org/search/sss?maxAsk=5&query=1999%20honda%20accord&srchType=T&format=rss')
+	.on('article', show);
 
 function show ( article ) {
 

@@ -23,7 +23,7 @@ Fragment.prototype = {
 				console.log(err);
 			} else {
 
-				$('p.row').each(function(index, elem) {
+				$('p.row').slice(0, 5).each(function(index, elem) { // limit to 5 elements per page
 
 					var $_this = $(this);
 
@@ -33,9 +33,11 @@ Fragment.prototype = {
 
 						var link = $_this.find('a').first().attr('href');
 
+						self.list += "<p>";
 						self.list += "<div style=" + "\"background:#eee;padding:8px;mragin-top:8px;border-bottom:1px solid #bbb\"" + ">";
 						self.list += "<a href=\"" + link + "\">" + html + "</a>";
 						self.list += "</div>";
+						self.list += "</p>";
 					}
 				});
 

@@ -21,9 +21,9 @@ html
 					div.tabbable
 						ul.nav.nav-tabs
 							li.active
-								a(href="#tab1", data-toggle="tab")= "Listings"
+								a(href="#tab1", data-toggle="tab")= "Add"
 							li
-								a(href="#tab2", data-toggle="tab")= "Settings"
+								a(href="#tab2", data-toggle="tab")= "Scrape"
 
 						div.tab-content
 							div.tab-pane.active#tab1
@@ -39,7 +39,7 @@ html
 										strong= " Add"
 
 							div.tab-pane#tab2
-								form#location
+								form#location.hidden
 									label= 'Searching all cities in California'
 									input(type='hidden', value='within: X miles || state')
 								br
@@ -51,7 +51,7 @@ html
 											i.icon-arrow-right
 									p
 								br
-								form#interval
+								form#interval.hidden
 									label= 'Scrape frequency: 15 min.'
 
 				div.span7.offset1.listings

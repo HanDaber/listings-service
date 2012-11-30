@@ -5,7 +5,7 @@ exports.scrape = function (req, res) {
 
 	res.send( 'start' );
 
-	return listingModel.find(function (err, listings) {
+	listingModel.find(function (err, listings) {
 		if (!err && req.body.email) {
 
 			var scraper = new ScraperControl( listings );

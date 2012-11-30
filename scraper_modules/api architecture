@@ -14,8 +14,12 @@ var listing_methods += {
 	read(),
 	update(),
 	destroy(),
-	build_queries( template ) => this.cities.map( return filled_template; ),
-	scrape() => 
+	build_queries( template ) => this.cities.map( return filled_template; )
+};
+
+
+scraper_methods = {
+	scrape( listings, (10 min/listings.length), results.push( listing ) )	
 };
 
 
@@ -30,6 +34,15 @@ var result_methods = {
 };
 
 
-ListingModel.find( l ) each=> l.scrape( l.build_queries( cl_template ) ) => [ <Result>, ... ]::results.push()
 
-ListingModel.find( l ) each=> l.mail( l.results ), l.clear_results()
+mailer_methods =  {
+	mail( email, listings ); delete(results);
+};
+
+
+// ========================= usage
+
+							// 5 listings
+scraper.scrape( listings.all, 2min, results.push( listing ) );
+
+request( 'api/listings', ( 15 min ), mail( email, listings ) );

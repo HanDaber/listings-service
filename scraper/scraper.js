@@ -11,7 +11,7 @@ Scraper.prototype = {
 		
 		var self = this;
 
-		scrape( self.urls, callback, { 'reqPerSec': 10 });
+		scrape( self.urls, callback, { 'reqPerSec': (self.urls.length / 2) });
 	},
 
 	'get_all_cities': function ( state, callback ) {

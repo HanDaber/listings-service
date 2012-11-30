@@ -117,7 +117,7 @@ $(function() {
             email = $_elem.siblings('input[name=email]').val(),
             msg = scrape_form.find('p');
 
-        $_elem.addClass('disabled');
+        $_elem.addClass('disabled').fadeOut();
 
         msg.html('scraping... check your email in a few minutes.');
 
@@ -125,7 +125,7 @@ $(function() {
             console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
             if ( textStatus === 'success' ) {
                 setTimeout(function() {
-                    $_elem.removeClass('disabled');
+                    $_elem.fadeIn().removeClass('disabled');
                     msg.html('');
                 }, 30000);
             }
