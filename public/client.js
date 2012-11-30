@@ -1,6 +1,6 @@
 $(function() {
 
-
+    var email_pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/);
 
     // $_name denotes that name is an HTMLElement
     var $_listings = $('.listings').find('tbody'),
@@ -38,6 +38,10 @@ $(function() {
 
     function find_form( name ) {
         return $("form[name=" + name + "]");
+    }
+
+    function post_scrape ( obj, callback ) {
+        $.post("/api/scrape", obj, callback(data, textStatus, jqXHR));
     }
 
 
@@ -117,19 +121,32 @@ $(function() {
             email = $_elem.siblings('input[name=email]').val(),
             msg = scrape_form.find('p');
 
-        $_elem.addClass('disabled').fadeOut();
 
-        msg.html('scraping... check your email in a few minutes.');
+        if ( email_pattern.test(email) ) {
 
-        $.post("/api/scrape", {'email': email}, function(data, textStatus, jqXHR) {
-            console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
-            if ( textStatus === 'success' ) {
-                setTimeout(function() {
+            email.val('');
+
+            msg.addClass('alert alert-success').html('Scraping... check your email in a few minutes.').fadeIn();
+
+            $_elem.addClass('disabled').fadeOut();
+
+            post_scrape(function(data, textStatus, jqXHR) {
+
+                if (textStatus === 'success') {
                     $_elem.fadeIn().removeClass('disabled');
                     msg.html('');
-                }, 30000);
-            }
-        });
+                }
+
+            });
+
+        } else {
+            msg.addClass('alert alert-error').html('Invalid email, try again...').fadeIn();
+        }
+
+        setTimeout(function () {
+            msg.fadeOut().removeClass('alert-error alert-success');
+        }, 2500);
+
     });
     
 });

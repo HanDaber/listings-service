@@ -68,21 +68,26 @@ function Controller( collection ) {
 	this.collection = collection;
 }
 Controller.prototype = {
-	'start': function ( email ) {
+	'start': function ( param ) {
 
-		if( email ) { 
-			mail = new Mailer( email ) 
+		if ( param && (typeof( param ) == 'string') ) { 
+
+			mail = new Mailer( param );
+
+		} else if ( param && (typeof( param ) == 'function') ) {
+			
+			mail = param;
+
+		}
+
+		build_queries( null, {statusCode: 200}, JSON.stringify(this.collection) );
+
+		if ( !param ) {
+			console.log('invalid param in control.js');
 		}
 		
-		if( this.collection ) {
-
-			build_queries( null, {statusCode: 200}, JSON.stringify(this.collection) );
-			
-		} else {
-
-			console.log('\n\n FETCHING LISTINGS FROM API \n\n');
-
-			listing_fetcher.fetch('listings', build_queries);
+		if( !this.collection ) {
+			console.log('Error: you did not pass a collection to controller');	
 		}
 	}
 };
@@ -141,8 +146,6 @@ function run_scrape ( scraper ) {
 	    	console.log('building email...');
 	    	
 	    	var body = fragment.compress();
-
-	    	// console.dir('farts.');
 
 	    	mail( body );
 	    }

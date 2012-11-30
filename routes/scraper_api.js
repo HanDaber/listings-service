@@ -3,22 +3,47 @@ var listingModel = require('../listing_model'),
 
 exports.scrape = function (req, res) {
 
-	res.send( 'start' );
+	var email = req.body.email;
 
-	listingModel.find(function (err, listings) {
-		if (!err && req.body.email) {
+	if ( email ) {
+
+		listingModel.find(function (err, listings) {
 
 			var scraper = new ScraperControl( listings );
-			
-			(function () {
-				scraper.start( req.body.email );
-			})();
 
-			res.end( 'done' );
+			if (!err) {
 
-		} else {
-			console.log(err);
-		}
-	});
+				res.end();
+				scraper.start( email );
 
+			} else {
+				console.log(err);
+			}
+		});
+
+	} else {
+
+		listingModel.find(function (err, listings) {
+
+			var scraper = new ScraperControl( listings );
+
+			if (!err) {
+
+				scraper.start(function(html) {
+
+					res.writeHead(200, {
+						'Content-Length': html.length,
+						'Content-Type': 'text/html'
+					});
+
+					res.end( html );
+
+				});
+
+			} else {
+				console.log(err);
+			}
+		});
+
+	}
 };

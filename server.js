@@ -41,6 +41,7 @@ app.get('/', routes.index);
 // REST API
 app.get('/api', listing_api.test);
 app.post('/api/scrape', scraper_api.scrape);
+app.get('/api/scrape', scraper_api.scrape);
 
 // All listings
 app.get('/api/listings', listing_api.all_listings);
