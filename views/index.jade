@@ -34,9 +34,10 @@ html
 									input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
 									input.span4(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
 									input.span4(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
-									button.btn.btn-primary.center
-										i.icon-plus
-										strong= " Add"
+									center
+										button.btn.btn-primary
+											i.icon-plus
+											strong= " Add"
 
 							div.tab-pane#tab2
 								form#location.hidden
@@ -61,18 +62,18 @@ html
 							h4= "Your Listings"
 						thead
 							tr
-								th="Name"
-								th="Cities"
-								th="Price Range"
-								th.pull-right=" "
+								th= "Name"
+								th= "Cities"
+								th= "Price"
+								th.pull-right= "Edit"
 						tbody
 							tr#roading
 
 							tr.listing.template
-								td
+								td.title
 									h5.name
 									small.type
-								td
+								td.area
 									span='all of CA'
 								td.price
 									span= "$"
@@ -81,7 +82,7 @@ html
 									span= "$"
 									span.max
 
-								td
+								td.edit
 									form.edit_listing(action="", method="")
 										input.listing_id(type='hidden', value='')
 										button.btn.btn-danger.pull-right

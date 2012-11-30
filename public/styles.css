@@ -23,3 +23,7 @@ div#cities { border: 1px solid #bbb; display: inline-block; }*/
 .center { display: inline-block; margin-left: auto; margin-right: auto; }
 
 .listings table { margin-top: 1.5em; }
+.listings table thead { background-color: rgba(0, 125, 220, 0.3); }
+.listings caption { margin-bottom: 2em; }
+
+.listing .name { margin-top: 1px; }
