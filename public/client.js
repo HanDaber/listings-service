@@ -58,7 +58,7 @@ $(function() {
 	listing_form.find('button').on('click', function( event ) {
     	
     	event.preventDefault();
-        var $_elem = $(this).parent();
+        var $_elem = $(this).parents('form');
 
         var name = $_elem.find( "input[name=listing_name]" ).val(),
             type = $_elem.find( "select[name=listing_type]" ).val(),
