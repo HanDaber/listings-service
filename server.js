@@ -3,15 +3,13 @@
  */
 
 var express = require('express'),
-  path = require('path'),
-  http = require('http'),
-  db = require('./db'),
-  listingModel = require('./listing_model'),
-  cityModel = require('./city_model'),
-  routes = require('./routes'),
-  listing_api = require('./routes/listing_api'),
-  city_api = require('./routes/city_api'),
-  scraper_api = require('./routes/scraper_api');
+    path = require('path'),
+    http = require('http'),
+    db = require('./db'),
+    routes = require('./routes'),
+    listings = require('./routes/listing_api'),
+    cities = require('./routes/city_api'),
+    scraper = require('./routes/scraper_api');
 
 // Configure express
 var app = express();
@@ -39,12 +37,12 @@ app.configure('development', function() {
 app.get('/', routes.index);
 
 // REST API
-app.get('/api', listing_api.test);
-app.post('/api/scrape', scraper_api.scrape);
-app.get('/api/scrape', scraper_api.scrape);
+app.get('/api', listings.test);
+app.post('/api/scrape', scraper.scrape);
+app.get('/api/scrape', scraper.scrape);
 
 // All listings
-app.get('/api/listings', listing_api.all_listings);
+app.get('/api/listings', listings.all_listings);
 
 // =====================  Bulk destroy all ======================== TEMP
 /*app.get('/api/listings/reset', function (req, res) {
@@ -69,49 +67,21 @@ app.get('/api/cities/reset', function (req, res) {
 });*/
 
 // Single listing
-app.get('/api/listings/:id', listing_api.one_listing);
+app.get('/api/listings/:id', listings.one_listing);
 
 // Create a listing
-app.post('/api/listings', listing_api.create_listing);
+app.post('/api/listings', listings.create_listing);
 
 // Update one listing
-app.post('/api/listings/update/:id', listing_api.update_listing);
+app.post('/api/listings/update/:id', listings.update_listing);
 
 // Delete one listing
-app.post('/api/listings/delete/:id', listing_api.delete_listing);
+app.post('/api/listings/delete/:id', listings.delete_listing);
 
-// Bulk update
-/*app.put('/api/listings', function (req, res) {
-    var i, len = 0;
-    console.log("is Array req.body.listings");
-    console.log(Array.isArray(req.body.listings));
-    console.log("PUT: (listings)");
-    console.log(req.body.listings);
-    if (Array.isArray(req.body.listings)) {
-        len = req.body.listings.length;
-    }
-    for (i = 0; i < len; i++) {
-        console.log("UPDATE listing by id:");
-        for (var id in req.body.listings[i]) {
-            console.log(id);
-        }
-        listingModel.update({ "_id": id }, req.body.listings[i][id], function (err, numAffected) {
-            if (err) {
-                console.log("Error on update");
-                console.log(err);
-            } else {
-                console.log("updated num: " + numAffected);
-            }
-        });
-    }
-    return res.send(req.body.listings);
-});*/
+app.get('/api/cities', cities.all_cities);
 
+app.post('/api/cities', cities.create_city);
 
-
-app.get('/api/cities', city_api.all_cities);
-
-app.post('/api/cities', city_api.create_city);
 
 
 http.createServer(app).listen(app.get('port'), function(){

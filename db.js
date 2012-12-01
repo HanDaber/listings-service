@@ -3,7 +3,6 @@ var mongoose = require('mongoose'),
 
 // Connect to db depending on environment
 if (process.env.MONGOHQ_URL) {
-	console.log('MONGOHQ_URL: ' + process.env.MONGOHQ_URL );
 	db_host = process.env.MONGOHQ_URL;
 } else {
 	mongoose.set('deug', true);

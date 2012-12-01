@@ -96,7 +96,7 @@ var handle = partial( handle_response, handle_html );
 
 
 
-
+exports.partial = partial;
 
 
 
