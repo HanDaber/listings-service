@@ -1,95 +1,81 @@
-doctype 5
-html
-	head
-		meta(charset="utf-8")
-		meta(name='viewport', content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;")
-		title= 'Listing Manager &#946;'
-		link(rel="stylesheet", type="text/css", href="bootstrap/css/bootstrap.min.css", media="screen")
-		link(rel="stylesheet", type="text/css", href="bootstrap/css/bootstrap-responsive.min.css", media="screen")
-		link(rel="stylesheet", type="text/css", href="styles.css", media="screen")
+extends layout
 
-	body
-		div.container
-			div.row
-				div.span4.offset4
-					h3.title= 'Listing Manager '
-						span= '&#946;'
+block content
+	div.container
+		div.row
+			div.span4.offset4
+				h3.title= 'Listing Manager '
+					span= '&#946;'
 
-			div.row
-				div.span4
+		div.row
+			div.span4
 
-					div.tabbable
-						ul.nav.nav-tabs
-							li.active
-								a(href="#tab1", data-toggle="tab")= "Add"
-							li
-								a(href="#tab2", data-toggle="tab")= "Scrape"
+				div.tabbable
+					ul.nav.nav-tabs
+						li.active
+							a(href="#tab1", data-toggle="tab")= "Add"
+						li
+							a(href="#tab2", data-toggle="tab")= "Scrape"
 
-						div.tab-content
-							div.tab-pane.active#tab1
-								form#add_listing(action="", method="", name="listings")
-									select.span4(name="listing_type")
-										option(value='for sale', selected='selected')= 'for sale'
-										option(value='housing', disabled='disabled')= 'housing'
-									input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
-									input.span4(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
-									input.span4(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
-									center
-										button.btn.btn-primary
-											i.icon-plus
-											strong= " Add"
+					div.tab-content
+						div.tab-pane.active#tab1
+							form#add_listing(action="", method="", name="listings")
+								select.span4(name="listing_type")
+									option(value='for sale', selected='selected')= 'for sale'
+									option(value='housing', disabled='disabled')= 'housing'
+								input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
+								input.span4(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
+								input.span4(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
+								center
+									button.btn.btn-primary
+										i.icon-plus
+										strong= " Add"
 
-							div.tab-pane#tab2
-								form#location.hidden
-									label= 'Searching all cities in California'
-									input(type='hidden', value='within: X miles || state')
-								br
-								form#scrape
-									label= 'Scrape and send email now:'
-									div.input-append
-										input.span3(type='email', placeholder='email address', name='email')
-										button.btn
-											i.icon-arrow-right
-									p
-								br
-								form#interval.hidden
-									label= 'Scrape frequency: 15 min.'
+						div.tab-pane#tab2
+							form#location.hidden
+								label= 'Searching all cities in California'
+								input(type='hidden', value='within: X miles || state')
+							br
+							form#scrape
+								label= 'Scrape and send email now:'
+								div.input-append
+									input.span3(type='email', placeholder='email address', name='email', autofocus)
+									button.btn
+										i.icon-arrow-right
+								p
+							br
+							form#interval.hidden
+								label= 'Scrape frequency: 15 min.'
 
-				div.span7.offset1.listings
+			div.span7.offset1.listings
 
-					table.table.table-striped
-						caption
-							h4= "Your Listings"
-						thead
-							tr
-								th= "Name"
-								th= "Cities"
-								th= "Price"
-								th.pull-right= "Edit"
-						tbody
-							tr#roading
+				table.table.table-striped
+					caption
+						h4= "Your Listings"
+					thead
+						tr
+							th= "Name"
+							th= "Cities"
+							th= "Price"
+							th.pull-right= "Edit"
+					tbody
+						tr#roading
 
-							tr.listing.template
-								td.title
-									h5.name
-									small.type
-								td.area
-									span='all of CA'
-								td.price
-									span= "$"
-									span.min
-									span= " - "
-									span= "$"
-									span.max
+						tr.listing.template
+							td.title
+								h5.name
+								small.type
+							td.area
+								span='all of CA'
+							td.price
+								span= "$"
+								span.min
+								span= " - "
+								span= "$"
+								span.max
 
-								td.edit
-									form.edit_listing(action="", method="")
-										input.listing_id(type='hidden', value='')
-										button.btn.btn-danger.pull-right
-											i.icon-remove
-
-		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
-		script(src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js")
-		script(src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js")
-		script(src="bootstrap/js/bootstrap.min.js")
-		script(src="client.js")
+							td.edit
+								form.edit_listing(action="", method="")
+									input.listing_id(type='hidden', value='')
+									button.btn.btn-danger.pull-right
+										i.icon-remove

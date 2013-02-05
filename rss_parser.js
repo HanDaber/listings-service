@@ -1,5 +1,7 @@
 var feedparser = require('feedparser'),
-	partial = require('./utility_scripts').partial;
+	Listing = require('./scraper_modules/listing'),
+	Result = require('./scraper_modules/result').model;//,
+	// partial = require('./utility_scripts').partial;
 
 
 
@@ -10,27 +12,37 @@ var q = '1999%20honda%20accord';
 
 
 
-function clScraper (  ) {
+function rssScraper (  ) {
 
-	this.now = new Date();
-	this.last_scrape_date = Date.parse('Thu Nov 29 2012 16:17:46 GMT-0800 (PST)');
+	// this.now = new Date();
+	// this.last_scrape_date = Date.parse('Fri Nov 30 2012 16:17:46 GMT-0800 (PST)');
 
 }
 
-clScraper.prototype = {
+rssScraper.prototype = {
 
-	'get_it' : function ( callback ) {
+	'article' : function ( callback ) {
 
-		var self = this;
+		var self = this; // this should be a Listing object
 
 		feedparser
-			.parseUrl( 'http://'+city+'.craigslist.org/search/sss?minAsk='+min+'&maxAsk='+max+'&query='+q+'&srchType=T&format=rss' )
+			.parseUrl( 'http://'+city+'.craigslist.org/search/sss?minAsk='+self.min+'&maxAsk='+self.max+'&query='+self.name+'&srchType=T&format=rss' )
 			.on('article', extract);
 
 		function extract ( article ) {
 
-			if ( article.date > self.last_scrape_date ) {
-				callback( article );
+			if ( article.date > self.last_scraped ) {
+
+				var r = new Result({
+					'title' : article.title,
+					'url' : article.link,
+					'date' : article.date
+				});
+
+				// self.results.push( r );
+				// self.save();
+				
+				callback( r );
 			}
 		}
 
@@ -38,8 +50,14 @@ clScraper.prototype = {
 
 };
 
-var shit_hair = new clScraper();
+module.exports = rssScraper;
+/*var rss_scraper = new rssScraper();
 
-shit_hair.get_it(function ( farts ) {
-	console.dir( farts );
-});
+rss_scraper.article(function ( article ) {
+	var r = new Result({
+		'title' : article.title,
+		'url' : article.link,
+		'date' : article.date
+	});
+	console.dir( r.title );
+});*/

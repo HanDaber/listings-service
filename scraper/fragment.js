@@ -29,7 +29,8 @@ Fragment.prototype = {
 
 					var html = sanitizer.sanitize( $_this.text() );
 
-					if ( self.is_new( html ) ) {
+					// if ( self.is_new( html ) ) {
+					if ( 1 ) {
 
 						var link = $_this.find('a').first().attr('href');
 

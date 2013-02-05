@@ -1,11 +1,11 @@
-var listingModel = require('../listing_model'),
+var listingModel = require('../scraper_modules/listing'),
 	u = require('underscore');
 
 exports.test = function (req, res) {
 	res.send('API is running');
 };
 
-exports.all_listings = function (req, res) {
+exports.all = function (req, res) {
 
 	return listingModel.find(function (err, listings) {
 		if (!err) {
@@ -17,7 +17,7 @@ exports.all_listings = function (req, res) {
 
 };
 
-exports.one_listing = function (req, res) {
+exports.find = function (req, res) {
 
 	return listingModel.findById(req.params.id, function (err, listing) {
 		if (!err) {
@@ -29,7 +29,7 @@ exports.one_listing = function (req, res) {
 
 };
 
-exports.create_listing = function (req, res) {
+exports.create = function (req, res) {
 	
 	var type = (req.body.type === '') ? 'for sale' : req.body.type;
 	var name = (req.body.name === '') ? 'none' : req.body.name;
@@ -53,7 +53,7 @@ exports.create_listing = function (req, res) {
 
 };
 
-exports.update_listing = function (req, res) {
+exports.update = function (req, res) {
 
 	return listingModel.findById(req.params.id, function (err, listing) {
 
@@ -74,7 +74,7 @@ exports.update_listing = function (req, res) {
 
 };
 
-exports.delete_listing = function (req, res) {
+exports.destroy = function (req, res) {
 
 	return listingModel.findById(req.params.id, function (err, listing) {
 

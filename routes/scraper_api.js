@@ -1,4 +1,4 @@
-var listingModel = require('../listing_model'),
+var listingModel = require('../scraper_modules/listing'),
 	ScraperControl = require('../control');
 
 exports.scrape = function (req, res) {
@@ -13,8 +13,9 @@ exports.scrape = function (req, res) {
 
 			if (!err) {
 
-				res.end();
 				scraper.start( email );
+
+				res.end();
 
 			} else {
 				console.log(err);

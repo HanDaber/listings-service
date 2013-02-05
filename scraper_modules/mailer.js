@@ -1,6 +1,6 @@
 var nodemailer = require("nodemailer");
 
-function Mailer ( email ) {
+function Mailer ( email, pass ) {
     // create reusable transport method (opens pool of SMTP connections) // TODO: secure credentials in db
     // new Buffer("Hello World").toString('base64')
     var smtpTransport = nodemailer.createTransport("SMTP", { service:"Gmail", auth: { user: 'handaber@gmail.com', pass: '!6infuckinsaniuM9' }});

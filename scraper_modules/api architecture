@@ -1,3 +1,20 @@
+default_uri_schemata = {
+	'craigslist': function( listing ) { return listing.region + "craigslist.org/src=?" + listing...; },
+	'ebay': fn...
+}
+
+
+House = new Listing()
+
+House.bedrooms = 2;
+
+House.uri_schemata = {
+	'craigslist': fn () {}
+}
+
+
+
+
 // Define Listing
 var listing_properties += {
   	'type'			: { type: String, 	default: 'for sale' },

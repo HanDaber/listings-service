@@ -1,9 +1,24 @@
+/*
+
+App:
+	Server:
+		Listings
+		Results
+		User
+		Scraper:
+		Mailer:
+	Client:
+		Manager:
+
+*/
+
+
 // require
 var Mailer = require('./scraper/mailer'),
 	Scraper = require('./scraper/scraper'),
 	Fragment = require('./scraper/fragment'),
 	Fetcher = require('./scraper/fetcher'),
-	Listing = require('./scraper/scraper_listing'),
+	Listing = require('./scraper_modules/listing'),
 	async = require('async'),
 	u = require('underscore');
 
@@ -73,6 +88,7 @@ Controller.prototype = {
 		if ( param && (typeof( param ) == 'string') ) { 
 
 			mail = new Mailer( param );
+			console.log( 'mail to ' + param );
 
 		} else if ( param && (typeof( param ) == 'function') ) {
 			
@@ -143,6 +159,7 @@ function run_scrape ( scraper ) {
 	        setTimeout(callback, 2000);
 	    },
 	    function (err) {
+
 	    	console.log('building email...');
 	    	
 	    	var body = fragment.compress();
