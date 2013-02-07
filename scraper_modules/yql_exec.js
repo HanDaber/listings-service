@@ -48,7 +48,7 @@ exports.exec = function ( listing, callback ) {
         opts = "&format=json&env=store://datatables.org/alltableswithkeys&callback=";
 
         
-                                                                console.log('query: ' + query + '\n');
+                                                                // console.log('query: ' + query + '\n');
 
 
     var uri = "" + base + encodeURIComponent(table) + encodeURIComponent(query) + opts;

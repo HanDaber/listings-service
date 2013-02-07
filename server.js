@@ -63,7 +63,7 @@ app.post( '/api/listings/:id', ListingManager.destroy );
 
 
 
-setInterval(Scrape, (5 * 60 * 1000) );
+setInterval(Scrape, (15 * 60 * 1000) );
 // Scrape();
 function Scrape () {
 	console.log('scraping...');

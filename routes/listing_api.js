@@ -97,7 +97,7 @@ exports.add_results = function (listing_id, results) {
 		if ( results.length > 0 ) {
 
 				u.each(results, function( R ) {
-					console.log(R.item.date.replace('T', ' ').substring(0, R.item.date.length - 6))
+					// console.log(R.item.date.replace('T', ' ').substring(0, R.item.date.length - 6))
 					listing.results.push( R.item );
 				});
 
@@ -123,7 +123,7 @@ exports.add_results = function (listing_id, results) {
 
 		return listing.save(function (err) {
 			if (!err) {
-				console.log( 'saved ' + listing );
+				// console.log( 'saved ' + listing );
 			} else {
 				console.log(err);
 			}
