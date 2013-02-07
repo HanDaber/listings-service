@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	Result = require('./result').schema;
+	a_month_ago = require('./scraper_helper').a_month_ago;
+	// Result = require('./result').schema;
 
 // ######## LISTING #######################################################
 // Define listing properties
@@ -9,9 +10,9 @@ var listing_properties = {
 	'name': { type: String, default: 'none' },
 	'min': { type: Number, default: 0 },
 	'max': { type: Number, default: 2500 },
-	'last_scraped' : { type: Date, default: Date.now() },
+	'last_scraped' : { type: String, default: a_month_ago() },
 	'cities' : [ String ],
-	'results' : [ String ]
+	'results' : []
 };
 
 var listing_methods = {

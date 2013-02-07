@@ -14,20 +14,6 @@ function list ( arr ) {
     return list;
 }
 
-function right_now () {
-
-    var now = new Date();
-    
-    return ( now.getFullYear() + '-' + leading_zero( now.getMonth() + 1 ) + '-' + leading_zero( now.getDate() ) + ' ' + leading_zero( now.getHours() > 12 ? now.getHours() - 12 : now.getHours() ) + ':' + leading_zero( now.getMinutes() ) + ':' + leading_zero( now.getSeconds() ) );
-}
-
-function leading_zero ( n ) {
-
-    if ( n < 10 ) return '0' + n;
-
-    else return n;
-}
-
 // callback = function(response) {
 //     var str = '';
 
@@ -54,11 +40,11 @@ exports.exec = function ( listing, callback ) {
         max_price = listing.max,
         min_price = listing.min,
         cities = listing.cities,
-        listing_id = listing._id;
+        last_scraped = listing.last_scraped;
 
     var base = "/v1/public/yql?q=",
         table = "use \"https://raw.github.com/HanDaber/yql-tables/master/craigslist/craigslist.search.listings.xml\" as listings; ",
-        query = "select item from listings where location in (" + list(cities) + ") and type=\"sss\" and query=\"" + keyword + "\" and minAsk=\"" + min_price + "\" and maxAsk=\"" + max_price + "\" and item.date > \"" + right_now() + "\"",
+        query = "select item from listings where location in (" + list(cities) + ") and type=\"sss\" and query=\"" + keyword + "\" and minAsk=\"" + min_price + "\" and maxAsk=\"" + max_price + "\" and item.date > \"" + last_scraped + "\"",
         opts = "&format=json&env=store://datatables.org/alltableswithkeys&callback=";
 
         

@@ -41,7 +41,10 @@ app.get( '/', routes.index );
 // app.get( '/api', ListingManager.test );
 
 // app.post( '/api/scrape', ListingManager.scrape );
-// app.get( '/api/scrape', ListingManager.scrape );
+app.get( '/api/scrape', function (req, res) {
+	Scrape();
+	res.send('OK').end();
+});
 
 // All listings
 app.get( '/api/listings', ListingManager.all );
@@ -58,16 +61,10 @@ app.post( '/api/listings', ListingManager.create );
 // Delete one listing
 app.post( '/api/listings/:id', ListingManager.destroy );
 
-function sessionCleanup() {
-    sessionStore.all(function(n, s) {
-        for (var i = 0; i < s.length; i++) {
-            sessionStore.get(s[i], function() {});
-        }
-    });
-}
 
-// setInterval(Scrape, (60 * 1000) );
-Scrape();
+
+setInterval(Scrape, (5 * 60 * 1000) );
+// Scrape();
 function Scrape () {
 	console.log('scraping...');
 
@@ -82,7 +79,7 @@ function Scrape () {
 
 				console.log('Adding ' + R.length + ' results to ' + listings[i].name);
 				
-				ListingManager.add_results( listings[i]._id, R ); 
+				ListingManager.add_results( listings[i]._id, R );
 			}
 		});
 

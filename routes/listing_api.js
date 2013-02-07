@@ -1,5 +1,6 @@
 var listingModel = require('../scraper_modules/listing'),
-	u = require('underscore');
+	u = require('underscore'),
+	right_now = require('../scraper_modules/scraper_helper').right_now;
 
 exports.test = function (req, res) {
 	res.send('API is running');
@@ -93,7 +94,32 @@ exports.add_results = function (listing_id, results) {
 
 	listingModel.findById(listing_id, function (err, listing) {
 
-		listing.results = results;
+		if ( results.length > 0 ) {
+
+				u.each(results, function( R ) {
+					console.log(R.item.date.replace('T', ' ').substring(0, R.item.date.length - 6))
+					listing.results.push( R.item );
+				});
+
+			// var newest = u.filter( results, function ( R ) {
+				
+			// 	if ( R.item.date.replace('T1', ' ').replace('T2', ' ').substring(0, R.item.date.length - 6) > listing.last_scraped.replace('-08:00', '') ) {
+			// 		return true;
+			// 	} else { false }
+
+			// 	// return R.date > listing.last_scraped;
+			// });
+
+			// if ( newest.length > 0 ) {
+			// 	u.each(newest, function( R ) {
+			// 		listing.results.push( R.item );
+			// 	});
+			// }
+
+		}
+
+		listing.last_scraped = right_now();
+
 
 		return listing.save(function (err) {
 			if (!err) {
