@@ -3,6 +3,7 @@
  */
 
 var express = require('express'),
+	redis_store = require('connect-redis')(express),
     path = require('path'),
     http = require('http'),
     fn = require('underscore'),
@@ -23,8 +24,8 @@ app.configure(function() {
 	app.use(express.logger('dev'));
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
-	app.use(express.cookieParser('8345t84y57t84t87y45th87y45t8y4538t7v58ntcyt3485t45ct87857tyv'));
-	app.use(express.session('4352084576294857v956984693487698347679486797832465274f5845'));
+	app.use(express.cookieParser('8345t84y57t84t87y45693everm4876983476th87y45t8y4538t7v58ntcyt3485t45ct87857tyv'));
+	app.use(express.session({ store: new redis_store, secret: '4352797832tcyt30845sherm76297y45t8y4538t7v5479486797832tcyt3485t4465274f5845' }));
 	app.use(app.router);
 	app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -57,9 +58,17 @@ app.post( '/api/listings', ListingManager.create );
 // Delete one listing
 app.post( '/api/listings/:id', ListingManager.destroy );
 
+function sessionCleanup() {
+    sessionStore.all(function(n, s) {
+        for (var i = 0; i < s.length; i++) {
+            sessionStore.get(s[i], function() {});
+        }
+    });
+}
 
-
-// setInterval(function() {
+// setInterval(Scrape, (60 * 1000) );
+Scrape();
+function Scrape () {
 	console.log('scraping...');
 
 	ListingManager.get_all( function ( listings ) {
@@ -78,8 +87,7 @@ app.post( '/api/listings/:id', ListingManager.destroy );
 		});
 
 	});
-
-// }, ( 60 * 1000 ) );
+}
 
 http.createServer( app ).listen( app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

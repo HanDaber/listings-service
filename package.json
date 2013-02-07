@@ -14,7 +14,8 @@
     "scraper": "*",
     "request": "*",
     "async": "*",
-    "sanitizer": "*"
+    "sanitizer": "*",
+    "connect-redis" : "*"
   },
   "engines": {
     "node": "0.8.x",
