@@ -69,9 +69,11 @@ app.post( '/api/listings/:id', ListingManager.destroy );
 		async.map( listings, YQL.exec, function ( err, results ) {
 			for ( var i = 0, r = results.length; i < r; i++ ) {
 
-				console.log('Adding results to ' + listings[i].name);
+				var R = results[i];
+
+				console.log('Adding ' + R.length + ' results to ' + listings[i].name);
 				
-				ListingManager.add_results( listings[i]._id, results[i] ); 
+				ListingManager.add_results( listings[i]._id, R ); 
 			}
 		});
 
