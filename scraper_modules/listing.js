@@ -11,7 +11,7 @@ var listing_properties = {
 	'max': { type: Number, default: 2500 },
 	'last_scraped' : { type: Date, default: Date.now() },
 	'cities' : [ String ],
-	'results' : [ Result ]
+	'results' : [ String ]
 };
 
 var listing_methods = {

@@ -17,6 +17,18 @@ exports.all = function (req, res) {
 
 };
 
+exports.get_all = function ( callback ) {
+
+	return listingModel.find(function (err, listings) {
+		if (!err) {
+			callback( listings );
+		} else {
+			console.log(err);
+		}
+	});
+
+};
+
 exports.find = function (req, res) {
 
 	return listingModel.findById(req.params.id, function (err, listing) {
@@ -35,12 +47,14 @@ exports.create = function (req, res) {
 	var name = (req.body.name === '') ? 'none' : req.body.name;
 	var min = (req.body.min === '') ? '0' : req.body.min;
 	var max = (req.body.max === '') ? '2500' : req.body.max;
+	var cities = (req.body.cities === '') ? 'none' : req.body.cities;
 	
 	var listing = new listingModel({
 		'type': type,
 		'name': name,
 		'min': min,
-		'max': max
+		'max': max,
+		'cities': cities
 	});
 
 	return listing.save(function (err) {
@@ -61,10 +75,29 @@ exports.update = function (req, res) {
 		listing.name = req.body.name;
 		listing.min = req.body.min;
 		listing.max = req.body.max;
+		listing.cities = req.body.cities;
 
 		return listing.save(function (err) {
 			if (!err) {
 				res.send( listing );
+			} else {
+				console.log(err);
+			}
+		});
+
+	});
+
+};
+
+exports.add_results = function (listing_id, results) {
+
+	listingModel.findById(listing_id, function (err, listing) {
+
+		listing.results = results;
+
+		return listing.save(function (err) {
+			if (!err) {
+				console.log( 'saved ' + listing );
 			} else {
 				console.log(err);
 			}

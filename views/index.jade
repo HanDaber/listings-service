@@ -13,17 +13,45 @@ block content
 				div.tabbable
 					ul.nav.nav-tabs
 						li.active
-							a(href="#tab1", data-toggle="tab")= "Add"
-						li
-							a(href="#tab2", data-toggle="tab")= "Scrape"
+							a(href="#tab1", data-toggle="tab")= "New Listing"
 
 					div.tab-content
 						div.tab-pane.active#tab1
 							form#add_listing(action="", method="", name="listings")
+
+								input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
+
 								select.span4(name="listing_type")
 									option(value='for sale', selected='selected')= 'for sale'
 									option(value='housing', disabled='disabled')= 'housing'
-								input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
+								
+								label
+									strong Add cities to search
+									select.span4(name="listing_cities", multiple="multiple")
+										option(value='atlanta')= 'atlanta'
+										option(value='austin')= 'austin'
+										option(value='boston')= 'boston'
+										option(value='chicago')= 'chicago'
+										option(value='dallas')= 'dallas'
+										option(value='denver')= 'denver'
+										option(value='detroit')= 'detroit'
+										option(value='houston')= 'houston'
+										option(value='lasvegas')= 'las vegas'
+										option(value='losangeles')= 'los angeles'
+										option(value='miami')= 'miami'
+										option(value='minneapolis')= 'minneapolis'
+										option(value='newyork')= 'new york'
+										option(value='orangecounty')= 'orange county'
+										option(value='philadelphia')= 'philadelphia'
+										option(value='phoenix')= 'phoenix'
+										option(value='portland')= 'portland'
+										option(value='raleigh')= 'raleigh'
+										option(value='sacramento')= 'sacramento'
+										option(value='sandiego')= 'san diego'
+										option(value='seattle')= 'seattle'
+										option(value='sfbay')= 'sf bay area'
+										option(value='washingtondc')= 'washington dc'
+
 								input.span4(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
 								input.span4(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
 								center
@@ -31,21 +59,6 @@ block content
 										i.icon-plus
 										strong= " Add"
 
-						div.tab-pane#tab2
-							form#location.hidden
-								label= 'Searching all cities in California'
-								input(type='hidden', value='within: X miles || state')
-							br
-							form#scrape
-								label= 'Scrape and send email now:'
-								div.input-append
-									input.span3(type='email', placeholder='email address', name='email', autofocus)
-									button.btn
-										i.icon-arrow-right
-								p
-							br
-							form#interval.hidden
-								label= 'Scrape frequency: 15 min.'
 
 			div.span7.offset1.listings
 
@@ -56,17 +69,17 @@ block content
 						tr
 							th= "Name"
 							th= "Cities"
-							th= "Price"
-							th.pull-right= "Edit"
+							th= "Price Range"
+							th.pull-right= "Del"
 					tbody
 						tr#roading
 
 						tr.listing.template
 							td.title
 								h5.name
-								small.type
+								small.results
 							td.area
-								span='all of CA'
+								span.cities
 							td.price
 								span= "$"
 								span.min

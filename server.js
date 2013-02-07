@@ -5,9 +5,12 @@
 var express = require('express'),
     path = require('path'),
     http = require('http'),
+    fn = require('underscore'),
+    async = require('async'),
     db = require('./db'),
     routes = require('./routes'),
-    ListingManager = require('./routes/listing_api');
+    ListingManager = require('./routes/listing_api'),
+    YQL = require('./scraper_modules/yql_exec');
 
 // Configure express
 var app = express();
@@ -43,21 +46,38 @@ app.get( '/', routes.index );
 app.get( '/api/listings', ListingManager.all );
 
 // Single listing
-app.get( '/api/listings/:id', ListingManager.find );
+// app.get( '/api/listings/:id', ListingManager.find );
 
 // Create a listing
 app.post( '/api/listings', ListingManager.create );
 
 // Update one listing
-app.put( '/api/listings/:id', ListingManager.update );
+// app.put( '/api/listings/:id', ListingManager.update );
 
 // Delete one listing
 app.post( '/api/listings/:id', ListingManager.destroy );
 
-setInterval(function() {
-  console.log('scrape + callback: mail()');
-  console.log('mailing...done');
-}, 5000 );
+
+
+// setInterval(function() {
+	console.log('scraping...');
+
+	ListingManager.get_all( function ( listings ) {
+
+		console.log('Got ' + Object.prototype.toString.apply( listings ) + ' of size ' + listings.length + ' listings from db');
+
+		async.map( listings, YQL.exec, function ( err, results ) {
+			for ( var i = 0, r = results.length; i < r; i++ ) {
+
+				console.log('Adding results to ' + listings[i].name);
+				
+				ListingManager.add_results( listings[i]._id, results[i] ); 
+			}
+		});
+
+	});
+
+// }, ( 60 * 1000 ) );
 
 http.createServer( app ).listen( app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

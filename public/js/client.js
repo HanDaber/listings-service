@@ -18,9 +18,18 @@ $(function() {
             var $_elem = new_from_template( $_listing );
 
             $_elem.find('.name').append( obj.name );
-            $_elem.find('.type').append( obj.type );
+            $_elem.find('.results').append( '( ' + obj.results.length + ' )');
             $_elem.find('.min').append( obj.min );
             $_elem.find('.max').append( obj.max );
+
+            if ( obj.cities ) {
+                var $_cities = $_elem.find('.cities');
+                for ( var i=0, c=obj.cities.length; i < c; i++) {
+                    if ( i > 0 ) $_cities.append( ", " );
+                    $_cities.append( obj.cities[i] );
+                }
+            }
+            
             $_elem.find('input.listing_id').val( obj._id );
             $_elem.find('button').attr( 'id', obj._id );
             
@@ -68,8 +77,9 @@ $(function() {
             type = $_elem.find( "select[name=listing_type]" ).val(),
             min = $_elem.find( "input[name=listing_min]" ).val(),
             max = $_elem.find( "input[name=listing_max]" ).val();
+            cities = $_elem.find( "select[name=listing_cities]" ).val();
 
-        var new_listing = { 'type': type, 'name': name, 'min': min, 'max': max };
+        var new_listing = { 'type': type, 'name': name, 'min': min, 'max': max, 'cities': cities };
 
         $("tr#roading").html("<div class='alert'>Saving...</div>").fadeIn();
 
@@ -111,44 +121,44 @@ $(function() {
     });
 
 
-    var scrape_form = $('form#scrape');
+    // var scrape_form = $('form#scrape');
 
-    scrape_form.on('click', 'button', function( event ) {
+    // scrape_form.on('click', 'button', function( event ) {
         
-        event.preventDefault();
+    //     event.preventDefault();
 
-        var $_elem = $(this),
-            $_email = $_elem.siblings('input[name=email]'),
-            email = $_email.val(),
-            msg = scrape_form.find('p');
+    //     var $_elem = $(this),
+    //         $_email = $_elem.siblings('input[name=email]'),
+    //         email = $_email.val(),
+    //         msg = scrape_form.find('p');
 
 
-        if ( email_pattern.test( email ) ) {
+    //     if ( email_pattern.test( email ) ) {
 
-            $_email.val('');
+    //         $_email.val('');
 
-            msg.addClass('alert alert-success').html('Scraping... check your email in a few minutes.').fadeIn();
+    //         msg.addClass('alert alert-success').html('Scraping... check your email in a few minutes.').fadeIn();
 
-            $_elem.addClass('disabled').fadeOut();
+    //         $_elem.addClass('disabled').fadeOut();
 
-            post_scrape({'email' : email}, function(data, textStatus, jqXHR) {
+    //         post_scrape({'email' : email}, function(data, textStatus, jqXHR) {
 
-                if (textStatus === 'success') {
-                    setTimeout(function () {
-                        $_elem.fadeIn().removeClass('disabled');
-                        msg.fadeOut().removeClass('alert-error alert-success');
-                        msg.html('');
-                    }, 2500);
-                    // $_elem.fadeIn().removeClass('disabled');
-                    // msg.html('');
-                }
+    //             if (textStatus === 'success') {
+    //                 setTimeout(function () {
+    //                     $_elem.fadeIn().removeClass('disabled');
+    //                     msg.fadeOut().removeClass('alert-error alert-success');
+    //                     msg.html('');
+    //                 }, 2500);
+    //                 // $_elem.fadeIn().removeClass('disabled');
+    //                 // msg.html('');
+    //             }
 
-            });
+    //         });
 
-        } else {
-            msg.addClass('alert alert-error').html('Invalid email, try again...').fadeIn();
-        }
+    //     } else {
+    //         msg.addClass('alert alert-error').html('Invalid email, try again...').fadeIn();
+    //     }
 
-    });
+    // });
     
 });

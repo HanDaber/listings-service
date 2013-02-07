@@ -1,23 +1,4 @@
-var cities = ['newyork', 'chico', 'sfbay'],
-    keyword = "iphone",
-    max_price = 500;
-
-var base = "/v1/public/yql?q=";
-
-var table = "use \"https://raw.github.com/HanDaber/yql-tables/master/craigslist/craigslist.search.listings.xml\" as listings; ";
-
-var query = "select item from listings where location in (" + list(cities) + ") and type=\"sss\" and query=\"" + keyword + "\" and maxAsk=\"" + max_price + "\" and item.date > \"" + right_now() + "\"";
-
-var options = "&format=json&env=store://datatables.org/alltableswithkeys&callback=";
-
-var uri = "" + base + encodeURIComponent(table) + encodeURIComponent(query) + options;
-
 var http = require('http');
-
-var options = {
-    host: 'query.yahooapis.com',
-    path: uri
-};
 
 function list ( arr ) {
     
@@ -43,28 +24,76 @@ function right_now () {
 function leading_zero ( n ) {
 
     if ( n < 10 ) return '0' + n;
-    
+
     else return n;
 }
 
-callback = function(response) {
-    var str = '';
+// callback = function(response) {
+//     var str = '';
 
-    //another chunk of data has been recieved, so append it to `str`
-    response.on('data', function (chunk) {
-        str += chunk;
-    });
+//     //another chunk of data has been recieved, so append it to `str`
+//     response.on('data', function (chunk) {
+//         str += chunk;
+//     });
 
-    //the whole response has been recieved, so we just print it out here
-    response.on('end', function () {
+//     //the whole response has been recieved, so we just print it out here
+//     response.on('end', function () {
 
-    	var obj = JSON.parse(str);
+//     	var obj = JSON.parse(str);
         
-        console.dir( obj.query.results.RDF );
+//         console.dir( obj.query.results );
 
-    });
-}
+//     });
+// }
 
-console.dir(query);
+exports.exec = function ( listing, callback ) {
 
-http.request(options, callback).end();
+    // console.log('YQL.exec(\n' + listing + '\n)');
+
+    var keyword = listing.name,
+        max_price = listing.max,
+        min_price = listing.min,
+        cities = listing.cities,
+        listing_id = listing._id;
+
+    var base = "/v1/public/yql?q=",
+        table = "use \"https://raw.github.com/HanDaber/yql-tables/master/craigslist/craigslist.search.listings.xml\" as listings; ",
+        query = "select item from listings where location in (" + list(cities) + ") and type=\"sss\" and query=\"" + keyword + "\" and minAsk=\"" + min_price + "\" and maxAsk=\"" + max_price + "\" and item.date > \"" + right_now() + "\"",
+        opts = "&format=json&env=store://datatables.org/alltableswithkeys&callback=";
+
+        
+                                                                console.log(query+'\n');
+
+
+    var uri = "" + base + encodeURIComponent(table) + encodeURIComponent(query) + opts;
+
+    var options = {
+        host: 'query.yahooapis.com',
+        path: uri
+    };
+
+    http.request(options, function (response) {
+        var str = '';
+
+        //another chunk of data has been recieved, so append it to `str`
+        response.on('data', function (chunk) {
+            str += chunk;
+        });
+
+        //the whole response has been recieved, so we just print it out here
+        response.on('end', function () {
+
+            var obj = JSON.parse(str),
+                res = obj.query.count > 0 ? obj.query.results.RDF : [];
+            
+            callback( null, res );
+
+        });
+    }).end();
+};
+
+
+
+
+
+
