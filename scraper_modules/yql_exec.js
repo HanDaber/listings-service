@@ -62,7 +62,7 @@ exports.exec = function ( listing, callback ) {
         opts = "&format=json&env=store://datatables.org/alltableswithkeys&callback=";
 
         
-                                                                console.log(query+'\n');
+                                                                console.log('query: ' + query + '\n');
 
 
     var uri = "" + base + encodeURIComponent(table) + encodeURIComponent(query) + opts;
@@ -84,7 +84,11 @@ exports.exec = function ( listing, callback ) {
         response.on('end', function () {
 
             var obj = JSON.parse(str),
+                res = [];
+
+            if ( obj.query ) {
                 res = obj.query.count > 0 ? obj.query.results.RDF : [];
+            }
             
             callback( null, res );
 
