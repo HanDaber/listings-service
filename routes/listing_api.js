@@ -1,6 +1,6 @@
 var listingModel = require('../scraper_modules/listing'),
 	u = require('underscore'),
-	right_now = require('../scraper_modules/scraper_helper').right_now;
+	scraper_helper = require('../scraper_modules/scraper_helper');
 
 exports.test = function (req, res) {
 	res.send('API is running');
@@ -23,6 +23,43 @@ exports.get_all = function ( callback ) {
 	return listingModel.find(function (err, listings) {
 		if (!err) {
 			callback( listings );
+		} else {
+			console.log(err);
+		}
+	});
+
+};
+
+exports.get_all_results = function ( callback ) {
+
+	return listingModel.find(function (err, listings) {
+
+		if (!err) {
+
+			var results = u.map( listings, function ( L ) {
+
+				var R = scraper_helper.build_results( L );
+
+				if ( R != null ) {
+					exports.remove_results( L );
+				}
+
+				return R;
+			} );
+
+			results = u.compact( results );
+
+			if ( results.length > 0 ) {
+
+				callback( results.join('') );
+
+			} else {
+				
+				console.log('no new results found.')
+
+				listingModel.connection.close();
+			}
+
 		} else {
 			console.log(err);
 		}
@@ -97,6 +134,26 @@ exports.update = function (req, res) {
 
 };
 
+
+exports.remove_results = function ( listing ) {
+
+	return listingModel.findById( listing._id, function (err, listing) {
+
+		listing.results = [];
+
+		return listing.save(function (err) {
+			if (!err) {
+				console.log( 'updated listing: ' + listing.name );
+			} else {
+				console.log(err);
+			}
+		});
+
+	});
+
+};
+
+
 exports.add_results = function (listing_id, results) {
 
 	listingModel.findById(listing_id, function (err, listing) {
@@ -125,7 +182,7 @@ exports.add_results = function (listing_id, results) {
 
 		}
 
-		listing.last_scraped = right_now();
+		listing.last_scraped = scraper_helper.right_now();
 
 
 		return listing.save(function (err) {

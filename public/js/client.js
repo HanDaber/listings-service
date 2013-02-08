@@ -155,7 +155,7 @@ $(function() {
 
             var links = $(this).find('.r_l');
 
-            $('#resultsModal').html( toitle );
+            $('#resultsModal').html( toitle + ' - <em>latest results:</em>' );
 
             links.clone().removeClass('hide').appendTo('#results_modal_list');
 

@@ -32,6 +32,8 @@ listingSchema.methods = listing_methods;
 // Define Listing Model from schema
 var listingModel = mongoose.model( 'Listing', listingSchema );
 
+listingModel.connection = mongoose.connection;
+
 module.exports = listingModel;
 
 // if( process.argv[2] == '--run' ) {
