@@ -32,6 +32,7 @@ $(function() {
             
             $_elem.find('input.listing_id').val( obj._id );
             $_elem.find('button').attr( 'id', obj._id );
+            $_elem.find('a.show_result_list').attr( 'data-listing_id', obj._id );
             
             $_listings.append( $_elem );
         }
@@ -39,6 +40,7 @@ $(function() {
 
     function clear_form( $_elem ) {
         $_elem.find( "input[type!=submit]" ).val('');
+        // $_elem.find( "select[name=listing_cities]" ).options.length = 0;
     }
 
     function new_from_template( $_elem ) {
@@ -101,64 +103,33 @@ $(function() {
 
     var del_forms = $('form.edit_listing');
 
-    $_listings.on('click', 'button', function(event) {
+    $_listings
+        .on('click', 'button', function ( event ) {
 
-        event.preventDefault();
+            event.preventDefault();
 
-        var _id = $(this).attr('id');
+            var _id = $(this).attr('id');
 
-        var p = $(this).parents('tr');
+            var p = $(this).parents('tr');
 
-        p.css('color', '#bbb');
-        p.css('background', '#eee');
-        $(this).addClass('disabled').off('click');
+            p.css('color', '#bbb');
+            p.css('background', '#eee');
+            $(this).addClass('disabled').off('click');
 
-        $.post("/api/listings/"+_id, _id, function(data, textStatus, jqXHR) {
-            //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
-            if( data._id && data._id == _id ) { p.fadeOut(); }
+            $.post("/api/listings/"+_id, _id, function(data, textStatus, jqXHR) {
+                //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
+                if( data._id && data._id == _id ) { p.fadeOut(); }
+            });
+
+        })
+        .on('click', 'a', function ( event ) {
+            event.preventDefault();
+
+            $('#results_modal')
+                
+                .modal('show');
+
+            console.log($(this).context.parentElement.firstChild.innerHTML);
         });
-
-    });
-
-
-    // var scrape_form = $('form#scrape');
-
-    // scrape_form.on('click', 'button', function( event ) {
-        
-    //     event.preventDefault();
-
-    //     var $_elem = $(this),
-    //         $_email = $_elem.siblings('input[name=email]'),
-    //         email = $_email.val(),
-    //         msg = scrape_form.find('p');
-
-
-    //     if ( email_pattern.test( email ) ) {
-
-    //         $_email.val('');
-
-    //         msg.addClass('alert alert-success').html('Scraping... check your email in a few minutes.').fadeIn();
-
-    //         $_elem.addClass('disabled').fadeOut();
-
-    //         post_scrape({'email' : email}, function(data, textStatus, jqXHR) {
-
-    //             if (textStatus === 'success') {
-    //                 setTimeout(function () {
-    //                     $_elem.fadeIn().removeClass('disabled');
-    //                     msg.fadeOut().removeClass('alert-error alert-success');
-    //                     msg.html('');
-    //                 }, 2500);
-    //                 // $_elem.fadeIn().removeClass('disabled');
-    //                 // msg.html('');
-    //             }
-
-    //         });
-
-    //     } else {
-    //         msg.addClass('alert alert-error').html('Invalid email, try again...').fadeIn();
-    //     }
-
-    // });
     
 });

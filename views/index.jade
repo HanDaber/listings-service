@@ -1,6 +1,14 @@
 extends layout
 
 block content
+
+	div#results_modal.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="resultsModal", aria-hidden="true")
+		div.modal-header
+			h3#resultsModal= 'Poo Ass'
+		div.modal-body
+			p= 'hi hi'
+			ul.result_list
+
 	div.container
 		div.row
 			div.span4.offset4
@@ -77,8 +85,9 @@ block content
 						tr.listing.template
 							td.title
 								h5.name
-								small.results
-								strong= " results"
+								a.show_result_list
+									small.results
+									strong= " results"
 							td.area
 								span.cities
 							td.price
