@@ -43,28 +43,35 @@ exports.find = function (req, res) {
 };
 
 exports.create = function (req, res) {
-	
-	var type = (req.body.type === '') ? 'for sale' : req.body.type;
-	var name = (req.body.name === '') ? 'none' : req.body.name;
-	var min = (req.body.min === '') ? '0' : req.body.min;
-	var max = (req.body.max === '') ? '2500' : req.body.max;
-	var cities = (req.body.cities === '') ? 'none' : req.body.cities;
-	
-	var listing = new listingModel({
-		'type': type,
-		'name': name,
-		'min': min,
-		'max': max,
-		'cities': cities
-	});
 
-	return listing.save(function (err) {
-		if (!err) {
-			res.send( listing );
-		} else {
-			console.log(err);
-		}
-	});
+	if (req.body.name === '' || req.body.cities === '') {
+		res.writeHead(418, {'Content-Type': 'text/plain'});
+		res.end();
+	} else {
+
+		var type = (req.body.type === '') ? 'for sale' : req.body.type;
+		// var name = (req.body.name === '') ? '' : req.body.name;
+		var min = (req.body.min === '') ? '0' : req.body.min;
+		var max = (req.body.max === '') ? '2500' : req.body.max;
+		// var cities = (req.body.cities === '') ? '' : req.body.cities;
+		
+		var listing = new listingModel({
+			'type': type,
+			'name': name,
+			'min': min,
+			'max': max,
+			'cities': cities
+		});
+
+		return listing.save(function (err) {
+			if (!err) {
+				res.send( listing );
+			} else {
+				console.log(err);
+			}
+		});
+
+	}
 
 };
 

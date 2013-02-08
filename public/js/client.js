@@ -40,15 +40,23 @@ $(function() {
             
             $_elem.find('input.listing_id').val( obj._id );
             $_elem.find('button').attr( 'id', obj._id );
-            $_elem.find('a.show_result_list').attr( 'data-listing_id', obj._id );
+            $_elem.find('a.show_result_list').attr( 'data-listing-id', obj._id );
             
             $_listings.append( $_elem );
         }
     }
 
     function clear_form( $_elem ) {
+
+        var options = $_elem.find( "select[name=listing_cities]" ).children('option');
+        
+        options.each(function (opt) {
+            $(this).context.selected = false;
+        });
+
         $_elem.find( "input[type!=submit]" ).val('');
         // $_elem.find( "select[name=listing_cities]" ).options.length = 0;
+        
     }
 
     function new_from_template( $_elem ) {
@@ -81,6 +89,7 @@ $(function() {
 	listing_form.find('button').on('click', function( event ) {
     	
     	event.preventDefault();
+
         var $_elem = $(this).parents('form');
 
         var name = $_elem.find( "input[name=listing_name]" ).val(),
@@ -94,10 +103,18 @@ $(function() {
         $("tr#roading").html("<div class='alert'>Saving...</div>").fadeIn();
 
         $.post("/api/listings", new_listing, function(data, textStatus, jqXHR) {
-            //console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
+            console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
             $('tr#roading').fadeOut().html('');
 
             manager.append( data );
+        }).fail(function () {
+
+            $("tr#roading").html("<div class='alert alert-error'>Error Saving...</div>");
+
+            window.setTimeout(function () {
+                $('tr#roading').fadeOut().html('');
+            }, 3000);
+
         });
 
         clear_form( $_elem );
