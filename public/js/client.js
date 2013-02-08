@@ -100,7 +100,7 @@ $(function() {
 
         var new_listing = { 'type': type, 'name': name, 'min': min, 'max': max, 'cities': cities };
 
-        $("tr#roading").html("<div class='alert'>Saving...</div>").fadeIn();
+        $("tr#roading").html("<td colspan='4'><div class='alert'>Saving...</div></td>").fadeIn();
 
         $.post("/api/listings", new_listing, function(data, textStatus, jqXHR) {
             console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
@@ -109,7 +109,7 @@ $(function() {
             manager.append( data );
         }).fail(function () {
 
-            $("tr#roading").html("<div class='alert alert-error'>Error Saving...</div>");
+            $("tr#roading").html("<td colspan='4'><div class='alert alert-error'>Error Saving...</div></td>");
 
             window.setTimeout(function () {
                 $('tr#roading').fadeOut().html('');
