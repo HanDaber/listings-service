@@ -54,7 +54,7 @@ exports.get_all_results = function ( callback ) {
 				callback( results.join('') );
 
 			} else {
-				
+
 				console.log('no new results found.')
 
 				listingModel.connection.close();
@@ -87,17 +87,17 @@ exports.create = function (req, res) {
 	} else {
 
 		var type = (req.body.type === '') ? 'for sale' : req.body.type;
-		// var name = (req.body.name === '') ? '' : req.body.name;
+		// var name = (req.body.name === 'none') ? '' : req.body.name;
 		var min = (req.body.min === '') ? '0' : req.body.min;
 		var max = (req.body.max === '') ? '2500' : req.body.max;
 		// var cities = (req.body.cities === '') ? '' : req.body.cities;
 		
 		var listing = new listingModel({
 			'type': type,
-			'name': name,
+			'name': req.body.name,
 			'min': min,
 			'max': max,
-			'cities': cities
+			'cities': req.body.cities
 		});
 
 		return listing.save(function (err) {
