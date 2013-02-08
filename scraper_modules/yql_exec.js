@@ -44,7 +44,7 @@ exports.exec = function ( listing, callback ) {
 
     var base = "/v1/public/yql?q=",
         table = "use \"https://raw.github.com/HanDaber/yql-tables/master/craigslist/craigslist.search.listings.xml\" as listings; ",
-        query = "select item from listings where location in (" + list(cities) + ") and type=\"sss\" and query=\"" + keyword + "\" and minAsk=\"" + min_price + "\" and maxAsk=\"" + max_price + "\" and item.date > \"" + last_scraped + "\"",
+        query = "select item from listings where location in (" + list(cities) + ") and type=\"sss\" and query=\"" + keyword + "\" and minAsk=\"" + min_price + "\" and maxAsk=\"" + max_price + "\" and item.date > \"" + last_scraped + "\" limit 100",
         opts = "&format=json&env=store://datatables.org/alltableswithkeys&callback=";
 
         
