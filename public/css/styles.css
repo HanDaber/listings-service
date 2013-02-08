@@ -27,3 +27,6 @@ div#cities { border: 1px solid #bbb; display: inline-block; }*/
 .listings caption { margin-bottom: 2em; }
 
 .listing .name { margin-top: 1px; }
+
+.r_l { font-size: 0.8em; }
+.r_l li { margin-bottom: 3em; border-bottom: 1px dotted #aaa; }

@@ -29,6 +29,14 @@ $(function() {
                     $_cities.append( obj.cities[i] );
                 }
             }
+
+            if ( obj.results ) {
+                var $_results = $_elem.find('.results').find('.r_l');
+                for ( var i=0, c=obj.results.length; i < c; i++) {
+                    // if ( i > 0 ) $_results.append( ", " );
+                    $_results.append( '<li><a href=\"' + obj.results[i].link + '\">' + obj.results[i].title + '</a></li>' );
+                }
+            }
             
             $_elem.find('input.listing_id').val( obj._id );
             $_elem.find('button').attr( 'id', obj._id );
@@ -123,13 +131,24 @@ $(function() {
 
         })
         .on('click', 'a', function ( event ) {
+            
             event.preventDefault();
 
-            $('#results_modal')
-                
-                .modal('show');
+            var toitle = $(this).context.parentElement.firstChild.innerHTML;
 
-            console.log($(this).context.parentElement.firstChild.innerHTML);
+            var links = $(this).find('.r_l');
+
+            $('#resultsModal').html( toitle );
+
+            links.clone().removeClass('hide').appendTo('#results_modal_list');
+
+            $('#results_modal').modal('show');
+
+            console.log(links);
         });
+
+    $('#results_modal').on('hidden', function () {
+        $('#results_modal_list').html( '' );
+    });
     
 });

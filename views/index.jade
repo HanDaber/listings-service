@@ -4,10 +4,13 @@ block content
 
 	div#results_modal.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="resultsModal", aria-hidden="true")
 		div.modal-header
-			h3#resultsModal= 'Poo Ass'
+			h3#resultsModal
+			button.btn.btn-danger.pull-right(class="btn", data-dismiss="modal", aria-hidden="true") close
 		div.modal-body
-			p= 'hi hi'
-			ul.result_list
+			div#results_modal_list
+
+
+
 
 	div.container
 		div.row
@@ -87,6 +90,7 @@ block content
 								h5.name
 								a.show_result_list
 									small.results
+										ol.r_l.hide
 									strong= " results"
 							td.area
 								span.cities
