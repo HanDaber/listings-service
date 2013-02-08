@@ -48,10 +48,11 @@ exports.exec = function ( listing, callback ) {
         opts = "&format=json&env=store://datatables.org/alltableswithkeys&callback=";
 
         
-                                                                // console.log('query: ' + query + '\n');
+                                                                console.log('query: ' + query + '\n');
 
 
     var uri = "" + base + encodeURIComponent(table) + encodeURIComponent(query) + opts;
+    // var uri = "" + base + encodeURIComponent(table) + encodeURIComponent(query) + opts;
 
     var options = {
         host: 'query.yahooapis.com',
@@ -73,7 +74,7 @@ exports.exec = function ( listing, callback ) {
                 res = [];
 
             if ( obj.query ) {
-                res = obj.query.count > 0 ? obj.query.results.RDF : [];
+                res = obj.query.count > 0 ? obj.query.results.RDF : res;
             }
             
             callback( null, res );
