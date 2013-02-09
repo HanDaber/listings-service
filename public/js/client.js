@@ -128,13 +128,13 @@ $(function() {
         ev.preventDefault();
 
         var $_elem = $(this).parents('form'),
-            container = $(this).parents('#admin'),
+            container = $(this).parents('#admin_form'),
             email = $_elem.find( "input[name=email]" ).val();
 
 
         $.post("/update/" + user_id, { 'email': email }, function(data, textStatus, jqXHR) {
 
-            container.fadeOut().html('');
+            container.fadeOut(300).html('');
 
             window.setTimeout(function () {
                 container.html('thanks!<hr>').fadeIn();
