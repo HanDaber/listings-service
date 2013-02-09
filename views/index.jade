@@ -25,6 +25,8 @@ block content
 					ul.nav.nav-tabs
 						li.active
 							a(href="#tab1", data-toggle="tab")= "New Listing"
+						li.admin
+							a(href="#tab2", data-toggle="tab")= "Admin"
 
 					div.tab-content
 						div.tab-pane.active#tab1
@@ -91,7 +93,7 @@ block content
 								a.show_result_list
 									small.results
 										ol.r_l.hide
-									strong= " results"
+									strong= " new results"
 							td.area
 								span.cities
 							td.price

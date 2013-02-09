@@ -25,11 +25,13 @@ exports.build_results = function ( listing ) {
 
 	if ( listing.results.length > 0 ) {
 
-		var html = '';
+		var html = "<div style=\"border-bottom:1px solid #666\"><h2><u>" + listing.name + "</u> (" + listing.results.length + "):</h2>";
 
-		fn.each( listing.results, function( R ) {
-			html += "<p><div style=" + "\"background:#eee;padding:8px;mragin-top:8px;border-bottom:1px solid #bbb\"" + ">" + "<a href=\"" + R.link + "\">" + R.title + "</a></div></p>";
+		fn.each( listing.results, function( R, index ) {
+			html += "<p><div style=\"background:#eee;padding:8px;mragin-top:8px;border-bottom:1px solid #bbb\">" + (index + 1) + ") <a href=\"" + R.link + "\">" + R.title + "</a></div></p>";
 		});
+
+		html += "</div>";
 
 		return html;
 

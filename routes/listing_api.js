@@ -162,7 +162,11 @@ exports.add_results = function (listing_id, results) {
 
 				u.each(results, function( R ) {
 					console.log('Adding Result from: ' + R.item.date); // .replace('T', ' ').substring(0, R.item.date.length - 6)
-					listing.results.push( R.item );
+					listing.results.push( {
+						link: R.item.link,
+						title: R.item.title,
+						date: R.item.date
+					} );
 				});
 
 			// var newest = u.filter( results, function ( R ) {
@@ -187,7 +191,7 @@ exports.add_results = function (listing_id, results) {
 
 		return listing.save(function (err) {
 			if (!err) {
-				// console.log( 'Saved listing from ' + listing.last_scrape );
+				console.log( 'Scraped ' + listing.name + ' successfully at ' + listing.last_scraped );
 			} else {
 				console.log(err);
 			}

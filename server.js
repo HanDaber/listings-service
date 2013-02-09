@@ -6,7 +6,6 @@ var express = require('express'),
 	redis_store = require('connect-redis')(express),
     path = require('path'),
     http = require('http'),
-    fn = require('underscore'),
     async = require('async'),
     db = require('./db'),
     routes = require('./routes'),
@@ -42,8 +41,7 @@ app.get( '/', routes.index );
 
 // app.post( '/api/scrape', ListingManager.scrape );
 app.get( '/api/scrape', function (req, res) {
-	Scrape();
-	res.send('OK').end();
+	Scrape( res.end );
 });
 
 // All listings
@@ -64,8 +62,11 @@ app.post( '/api/listings/:id', ListingManager.destroy );
 
 
 setInterval( Scrape, (60 * 60 * 1000) );
-// Scrape();
-function Scrape () {
+
+Scrape();
+
+function Scrape ( callback ) {
+
 	console.log('scraping...');
 
 	ListingManager.get_all( function ( listings ) {
@@ -80,12 +81,22 @@ function Scrape () {
 				console.log('Adding ' + R.length + ' results to ' + listings[i].name);
 				
 				ListingManager.add_results( listings[i]._id, R );
+
+				if ( callback && typeof(callback) === 'function' ) {
+					callback("OK\n");
+				}
+
 			}
 		});
 
 	});
 }
 
+
 http.createServer( app ).listen( app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+
+
+
+// END
