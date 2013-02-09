@@ -5,11 +5,11 @@ function Mailer ( email, pass ) {
     // new Buffer("Hello World").toString('base64')
     var smtpTransport = nodemailer.createTransport("SMTP", { service: "Gmail", auth: { 'user': email, 'pass': pass }});
 
-    return function ( body ) {
+    return function ( address, body ) {
         // setup e-mail data with unicode symbols
         var mailOptions = {
             from: "listing-mailer", // sender address
-            to: email, // list of receivers
+            to: address, // list of receivers
             subject: "latest scrape results", // Subject line
             text: "Hello", // plaintext body
             html: "<div><h2>listings-service scrape results</h2><hr>"+body+"</div>" // html body

@@ -15,8 +15,10 @@ App:
 
 // require
 var Mailer = require('./scraper_modules/mailer'),
+	fn = require('underscore'),
 	db = require('./db'),
-	ListingManager = require('./routes/listing_api');
+	ListingManager = require('./routes/listing_api'),
+	userModel = require('./routes/user_api');
 
 
 
@@ -24,11 +26,25 @@ var Mailer = require('./scraper_modules/mailer'),
 var mail = new Mailer('handaber@gmail.com', '!6infuckinsaniuM9');
 
 
+userModel.all(function ( users ) {
 
-ListingManager.get_all_results(function ( results ) {
+	fn.each( users, function ( user ) {
 
-	mail(results);
-	
+		if( user.email !== '' ) {
+
+			ListingManager.get_all_results( user, function ( results ) {
+
+				mail(user.email, results);
+				console.log(user.email + " sent:\n" + results)
+
+			});
+
+		} else {
+			console.log('no email')
+		}
+
+	});
+
 	setTimeout(function () {
 
 		db.connection.close();
@@ -36,6 +52,19 @@ ListingManager.get_all_results(function ( results ) {
 	}, 1000);
 
 });
+
+
+// ListingManager.get_all_results(function ( results ) {
+
+// 	mail(results);
+	
+// 	setTimeout(function () {
+
+// 		db.connection.close();
+
+// 	}, 1000);
+
+// });
 
 
 

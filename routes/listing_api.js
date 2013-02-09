@@ -8,7 +8,7 @@ exports.test = function (req, res) {
 
 exports.all = function (req, res) {
 
-	return listingModel.find(function (err, listings) {
+	return listingModel.find({ user_id: req.params.user_id }, function (err, listings) {
 		if (!err) {
 			res.send( listings );
 		} else {
@@ -30,9 +30,11 @@ exports.get_all = function ( callback ) {
 
 };
 
-exports.get_all_results = function ( callback ) {
+exports.get_all_results = function ( user, callback ) {
 
-	return listingModel.find(function (err, listings) {
+	var uid = user._id;
+
+	listingModel.find({ 'user_id': uid }, function (err, listings) {
 
 		if (!err) {
 
@@ -41,28 +43,32 @@ exports.get_all_results = function ( callback ) {
 				var R = scraper_helper.build_results( L );
 
 				if ( R != null ) {
-					exports.remove_results( L );
+					// exports.remove_results( L );
+					console.log('removed results from ' + L.name)
 				}
 
 				return R;
-			} );
+
+			});
 
 			results = u.compact( results );
 
 			if ( results.length > 0 ) {
 
+				// console.log('found results..')
 				callback( results.join('') );
 
 			} else {
 
 				console.log('no new results found.')
 
-				listingModel.connection.close();
+				// listingModel.connection.close();
 			}
 
 		} else {
 			console.log(err);
 		}
+
 	});
 
 };
@@ -81,23 +87,24 @@ exports.find = function (req, res) {
 
 exports.create = function (req, res) {
 
-	if (req.body.name === '' || req.body.cities === '') {
+	console.log(req.body.name, req.body.cities, req.body.user_id)
+
+	if (req.body.name === '' || req.body.cities === '' || req.body.user_id === '') {
 		res.writeHead(418, {'Content-Type': 'text/plain'});
 		res.end();
 	} else {
 
 		var type = (req.body.type === '') ? 'for sale' : req.body.type;
-		// var name = (req.body.name === 'none') ? '' : req.body.name;
 		var min = (req.body.min === '') ? '0' : req.body.min;
 		var max = (req.body.max === '') ? '2500' : req.body.max;
-		// var cities = (req.body.cities === '') ? '' : req.body.cities;
 		
 		var listing = new listingModel({
 			'type': type,
 			'name': req.body.name,
 			'min': min,
 			'max': max,
-			'cities': req.body.cities
+			'cities': req.body.cities,
+			'user_id': req.body.user_id
 		});
 
 		return listing.save(function (err) {
@@ -156,7 +163,7 @@ exports.remove_results = function ( listing ) {
 
 exports.add_results = function (listing_id, results) {
 
-	listingModel.findById(listing_id, function (err, listing) {
+	listingModel.findById( listing_id, function (err, listing) {
 
 		if ( results.length > 0 ) {
 
@@ -168,22 +175,6 @@ exports.add_results = function (listing_id, results) {
 						date: R.item.date
 					} );
 				});
-
-			// var newest = u.filter( results, function ( R ) {
-				
-			// 	if ( R.item.date.replace('T1', ' ').replace('T2', ' ').substring(0, R.item.date.length - 6) > listing.last_scraped.replace('-08:00', '') ) {
-			// 		return true;
-			// 	} else { false }
-
-			// 	// return R.date > listing.last_scraped;
-			// });
-
-			// if ( newest.length > 0 ) {
-			// 	u.each(newest, function( R ) {
-			// 		listing.results.push( R.item );
-			// 	});
-			// }
-
 		}
 
 		listing.last_scraped = scraper_helper.right_now();
@@ -203,7 +194,7 @@ exports.add_results = function (listing_id, results) {
 
 exports.destroy = function (req, res) {
 
-	return listingModel.findById(req.params.id, function (err, listing) {
+	return listingModel.findById( req.params.id, function (err, listing) {
 
 		return listing.remove(function (err) {
 			if (!err) {

@@ -1,0 +1,134 @@
+extends layout
+
+block content
+
+	div#results_modal.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="resultsModal", aria-hidden="true")
+		div.modal-header
+			h3#resultsModal
+			button.btn.btn-danger.pull-right(class="btn", data-dismiss="modal", aria-hidden="true") close
+		div.modal-body
+			div#results_modal_list
+		div.modal-footer
+			div &nbsp;
+
+
+
+
+	div.container
+		div.row
+			div.span4.offset4
+				h3.title= locals.user.name + ' - Listing Manager '
+					span= '&#946;'
+
+		div.row
+			div.span4
+
+				div.tabbable
+					ul.nav.nav-tabs#tab_pane
+						li.active
+							a(href="#new", data-toggle="tab")= "New Listing"
+						li
+							a(href="#admin", data-toggle="tab")= "Admin"
+
+					div.tab-content
+						div.tab-pane.active#new
+							form#add_listing(action="", method="", name="listings")
+
+								input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
+
+								select.span4(name="listing_type")
+									option(value='for sale', selected='selected')= 'for sale'
+									option(value='housing', disabled='disabled')= 'housing'
+								
+								label
+									strong Add cities to search
+									select.span4(name="listing_cities", multiple="multiple")
+										option(value='atlanta')= 'atlanta'
+										option(value='austin')= 'austin'
+										option(value='boston')= 'boston'
+										option(value='chicago')= 'chicago'
+										option(value='dallas')= 'dallas'
+										option(value='denver')= 'denver'
+										option(value='detroit')= 'detroit'
+										option(value='houston')= 'houston'
+										option(value='lasvegas')= 'las vegas'
+										option(value='losangeles')= 'los angeles'
+										option(value='miami')= 'miami'
+										option(value='minneapolis')= 'minneapolis'
+										option(value='newyork')= 'new york'
+										option(value='orangecounty')= 'orange county'
+										option(value='philadelphia')= 'philadelphia'
+										option(value='phoenix')= 'phoenix'
+										option(value='portland')= 'portland'
+										option(value='raleigh')= 'raleigh'
+										option(value='sacramento')= 'sacramento'
+										option(value='sandiego')= 'san diego'
+										option(value='seattle')= 'seattle'
+										option(value='sfbay')= 'sf bay area'
+										option(value='washingtondc')= 'washington dc'
+
+								input.span4(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
+								input.span4(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
+								input(type="hidden", name="user_id", value=locals.user._id)
+								center
+									button.btn.btn-success
+										i.icon-plus
+										strong= " Add"
+
+						div.tab-pane#admin
+							case locals.user.email
+								when ''
+									form#admin_form(action="", method="", name="admin")
+										label
+											strong add email
+											input.span4(type="text", name="email", placeholder="email address", autofocus)
+										center
+											button.btn.btn-success
+												i.icon-ok
+												strong= " Save"
+								default
+									hr
+	
+							p= 'Scrape Frequency: 1/hour'
+							p= "Email Frequency: 2/day \(5:00 AM & PM)"
+
+
+			div.span7.offset1.listings
+
+				table.table.table-striped
+					caption
+						h4= "Your Listings"
+					thead
+						tr
+							th= "Name"
+							th= "Cities"
+							th= "Price Range"
+							th.pull-right= "Del"
+					tbody
+						tr#roading
+
+						tr.listing.template
+							td.title.span2
+								h5.name
+							td.area
+								span.cities
+							td.price.span2
+								span= "$"
+								span.min
+								span= " - "
+								span= "$"
+								span.max
+
+							td.edit.span3
+								form.edit_listing(action="", method="")
+									input.listing_id(type='hidden', value='')
+									button.btn.btn-danger.pull-right.del
+										i.icon-remove
+									i.pull-right &nbsp;
+									button.btn.btn-info.pull-right.view
+										i.icon-search
+										small.results
+											ol.r_l.hide
+
+block script
+	script(src="js/bootstrap.min.js")

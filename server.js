@@ -9,6 +9,7 @@ var express = require('express'),
     db = require('./db'),
     routes = require('./routes'),
     ListingManager = require('./routes/listing_api'),
+    UserManager = require('./routes/user_api'),
     Scraper = require('./scraper_modules/scraper');
 
 // Configure express
@@ -39,7 +40,7 @@ app.get( '/', routes.index );
 // app.get( '/api', ListingManager.test );
 
 // All listings
-app.get( '/api/listings', ListingManager.all );
+app.get( '/api/listings/:user_id', ListingManager.all );
 
 // Single listing
 // app.get( '/api/listings/:id', ListingManager.find );
@@ -52,6 +53,11 @@ app.post( '/api/listings', ListingManager.create );
 
 // Delete one listing
 app.post( '/api/listings/:id', ListingManager.destroy );
+
+
+app.get( '/:name', UserManager.manager );
+app.post( '/:name', UserManager.find_or_create );
+app.post( '/update/:user_id', UserManager.update_email );
 
 
 http.createServer( app ).listen( app.get('port'), function(){

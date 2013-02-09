@@ -6,13 +6,14 @@ var mongoose = require('mongoose'),
 // ######## LISTING #######################################################
 // Define listing properties
 var listing_properties = {
-  	'type': { type: String, default: 'for sale' },
-	'name': { type: String, default: 'none' },
-	'min': { type: Number, default: 0 },
-	'max': { type: Number, default: 2500 },
+  	'type' : { type: String, default: 'for sale' },
+	'name' : { type: String, default: 'none' },
+	'min' : { type: Number, default: 0 },
+	'max' : { type: Number, default: 2500 },
 	'last_scraped' : { type: String, default: a_month_ago() },
 	'cities' : [ String ],
-	'results' : []
+	'results' : [],
+	'user_id' : String
 };
 
 var listing_methods = {

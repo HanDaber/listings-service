@@ -1,17 +1,6 @@
 extends layout
 
 block content
-
-	div#results_modal.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="resultsModal", aria-hidden="true")
-		div.modal-header
-			h3#resultsModal
-			button.btn.btn-danger.pull-right(class="btn", data-dismiss="modal", aria-hidden="true") close
-		div.modal-body
-			div#results_modal_list
-
-
-
-
 	div.container
 		div.row
 			div.span4.offset4
@@ -19,92 +8,9 @@ block content
 					span= '&#946;'
 
 		div.row
-			div.span4
-
-				div.tabbable
-					ul.nav.nav-tabs
-						li.active
-							a(href="#tab1", data-toggle="tab")= "New Listing"
-						li.admin
-							a(href="#tab2", data-toggle="tab")= "Admin"
-
-					div.tab-content
-						div.tab-pane.active#tab1
-							form#add_listing(action="", method="", name="listings")
-
-								input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
-
-								select.span4(name="listing_type")
-									option(value='for sale', selected='selected')= 'for sale'
-									option(value='housing', disabled='disabled')= 'housing'
-								
-								label
-									strong Add cities to search
-									select.span4(name="listing_cities", multiple="multiple")
-										option(value='atlanta')= 'atlanta'
-										option(value='austin')= 'austin'
-										option(value='boston')= 'boston'
-										option(value='chicago')= 'chicago'
-										option(value='dallas')= 'dallas'
-										option(value='denver')= 'denver'
-										option(value='detroit')= 'detroit'
-										option(value='houston')= 'houston'
-										option(value='lasvegas')= 'las vegas'
-										option(value='losangeles')= 'los angeles'
-										option(value='miami')= 'miami'
-										option(value='minneapolis')= 'minneapolis'
-										option(value='newyork')= 'new york'
-										option(value='orangecounty')= 'orange county'
-										option(value='philadelphia')= 'philadelphia'
-										option(value='phoenix')= 'phoenix'
-										option(value='portland')= 'portland'
-										option(value='raleigh')= 'raleigh'
-										option(value='sacramento')= 'sacramento'
-										option(value='sandiego')= 'san diego'
-										option(value='seattle')= 'seattle'
-										option(value='sfbay')= 'sf bay area'
-										option(value='washingtondc')= 'washington dc'
-
-								input.span4(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
-								input.span4(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
-								center
-									button.btn.btn-primary
-										i.icon-plus
-										strong= " Add"
-
-
-			div.span7.offset1.listings
-
-				table.table.table-striped
-					caption
-						h4= "Your Listings"
-					thead
-						tr
-							th= "Name"
-							th= "Cities"
-							th= "Price Range"
-							th.pull-right= "Del"
-					tbody
-						tr#roading
-
-						tr.listing.template
-							td.title
-								h5.name
-								a.show_result_list
-									small.results
-										ol.r_l.hide
-									strong= " new results"
-							td.area
-								span.cities
-							td.price
-								span= "$"
-								span.min
-								span= " - "
-								span= "$"
-								span.max
-
-							td.edit
-								form.edit_listing(action="", method="")
-									input.listing_id(type='hidden', value='')
-									button.btn.btn-danger.pull-right
-										i.icon-remove
+			div.span4.offset4
+				div.alert= "You cool, Bro?"
+				div.well.well-large#are_you_cool
+					input(type="text", name="name", placeholder="name")
+					input(type="text", name="key", placeholder="key")
+					button.btn.btn-inverse.btn-block= "Yes?"

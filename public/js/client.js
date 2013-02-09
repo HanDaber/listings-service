@@ -24,6 +24,7 @@ $(function() {
 
             if ( obj.cities ) {
                 var $_cities = $_elem.find('.cities');
+
                 for ( var i=0, c=obj.cities.length; i < c; i++) {
                     if ( i > 0 ) $_cities.append( ", " );
                     $_cities.append( obj.cities[i] );
@@ -32,6 +33,7 @@ $(function() {
 
             if ( obj.results ) {
                 var $_results = $_elem.find('.results').find('.r_l');
+
                 for ( var i=0, c=obj.results.length; i < c; i++) {
                     // if ( i > 0 ) $_results.append( ", " );
                     $_results.append( '<li><a href=\"' + obj.results[i].link + '\">' + obj.results[i].title + '</a></li>' );
@@ -54,8 +56,10 @@ $(function() {
             $(this).context.selected = false;
         });
 
+        var user_id = $_elem.find( "input[name=user_id]" ).val();
+
         $_elem.find( "input[type!=submit]" ).val('');
-        // $_elem.find( "select[name=listing_cities]" ).options.length = 0;
+        $_elem.find( "input[name=user_id]" ).val( user_id );
         
     }
 
@@ -67,19 +71,15 @@ $(function() {
         return $("form[name=" + name + "]");
     }
 
-    function post_scrape ( obj, callback ) {
-        $.post("/api/scrape", obj, callback);
-    }
-
 
 
     var manager = new Manager( $_listings ),
         listing_form = find_form('listings'),
+        admin_form = find_form('admin'),
+        user_id = listing_form.find('input[name=user_id]').val();
 
-        cities_form = find_form('cities'),  // <=== ehhh....
-        $_cities = cities_form.find('ul');
 
-    $.get("/api/listings", function(data, textStatus, jqXHR) {
+    $.get("/api/listings/" + user_id, function(data, textStatus, jqXHR) {
         //console.log("Get resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
         for( key in data ) {
             manager.append( data[key] );
@@ -95,10 +95,11 @@ $(function() {
         var name = $_elem.find( "input[name=listing_name]" ).val(),
             type = $_elem.find( "select[name=listing_type]" ).val(),
             min = $_elem.find( "input[name=listing_min]" ).val(),
-            max = $_elem.find( "input[name=listing_max]" ).val();
-            cities = $_elem.find( "select[name=listing_cities]" ).val();
+            max = $_elem.find( "input[name=listing_max]" ).val(),
+            cities = $_elem.find( "select[name=listing_cities]" ).val(),
+            uid = $_elem.find( "input[name=user_id]" ).val();
 
-        var new_listing = { 'type': type, 'name': name, 'min': min, 'max': max, 'cities': cities };
+        var new_listing = { 'user_id': uid, 'type': type, 'name': name, 'min': min, 'max': max, 'cities': cities };
 
         $("tr#roading").html("<td colspan='4'><div class='alert'>Saving...</div></td>").fadeIn();
 
@@ -122,6 +123,27 @@ $(function() {
         return false;
 	});
 
+    admin_form.on('click', 'button', function ( ev ) {
+
+        ev.preventDefault();
+
+        var $_elem = $(this).parents('form'),
+            container = $(this).parents('#admin'),
+            email = $_elem.find( "input[name=email]" ).val();
+
+
+        $.post("/update/" + user_id, { 'email': email }, function(data, textStatus, jqXHR) {
+
+            container.fadeOut().html('');
+
+            window.setTimeout(function () {
+                container.html('thanks!<hr>').fadeIn();
+            }, 500);
+
+        });
+
+    });
+
 
     // LOTS OF COPYPASTA EVERYWHERE --- REFACTOR THIS SHIT, MAN --- 
 
@@ -129,7 +151,7 @@ $(function() {
     var del_forms = $('form.edit_listing');
 
     $_listings
-        .on('click', 'button', function ( event ) {
+        .on('click', 'button.del', function ( event ) {
 
             event.preventDefault();
 
@@ -147,25 +169,44 @@ $(function() {
             });
 
         })
-        .on('click', 'a', function ( event ) {
+        .on('click', 'button.view', function ( event ) {
             
             event.preventDefault();
 
-            var toitle = $(this).context.parentElement.firstChild.innerHTML;
-
-            var links = $(this).find('.r_l');
+            var this_listing = $(this).parents('tr'),
+                toitle = this_listing.find('.name').html(),
+                links = this_listing.find('.r_l');
 
             $('#resultsModal').html( toitle + ' - <em>latest results:</em>' );
 
             links.clone().removeClass('hide').appendTo('#results_modal_list');
 
             $('#results_modal').modal('show');
-
-            console.log(links);
         });
 
     $('#results_modal').on('hidden', function () {
         $('#results_modal_list').html( '' );
+    });
+
+    $('#are_you_cool').on('click', 'button', function ( ev ) {
+
+        ev.preventDefault();
+
+        var parent = $(this).parents('#are_you_cool'),
+            name = parent.find('input[name=name]').val(),
+            key = parent.find('input[name=key]').val();
+
+        $.post("/" + name, { 'key': key }, function(data, textStatus, jqXHR) {
+
+            // console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
+            parent.html(data);
+
+        }).fail(function () {
+
+            parent.html("<div class='alert alert-error'>NOPE</div>");
+
+        });
+
     });
     
 });

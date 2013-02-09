@@ -30,3 +30,7 @@ div#cities { border: 1px solid #bbb; display: inline-block; }*/
 
 .r_l { font-size: 0.8em; }
 .r_l li { margin-bottom: 3em; border-bottom: 1px dotted #aaa; }
+.r_l li a { color: #ff0; }
+
+.results { display: inline-block; width: 3.5em; }
+#resultsModal { display: inline-block; }
