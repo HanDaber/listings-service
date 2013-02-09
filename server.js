@@ -6,11 +6,10 @@ var express = require('express'),
 	redis_store = require('connect-redis')(express),
     path = require('path'),
     http = require('http'),
-    async = require('async'),
     db = require('./db'),
     routes = require('./routes'),
     ListingManager = require('./routes/listing_api'),
-    YQL = require('./scraper_modules/yql_exec');
+    Scraper = require('./scraper_modules/scraper');
 
 // Configure express
 var app = express();
@@ -39,11 +38,6 @@ app.get( '/', routes.index );
 // REST API
 // app.get( '/api', ListingManager.test );
 
-// app.post( '/api/scrape', ListingManager.scrape );
-app.get( '/api/scrape', function (req, res) {
-	Scrape( res.end );
-});
-
 // All listings
 app.get( '/api/listings', ListingManager.all );
 
@@ -58,39 +52,6 @@ app.post( '/api/listings', ListingManager.create );
 
 // Delete one listing
 app.post( '/api/listings/:id', ListingManager.destroy );
-
-
-
-setInterval( Scrape, (60 * 60 * 1000) );
-
-Scrape();
-
-function Scrape ( callback ) {
-
-	console.log('scraping...');
-
-	ListingManager.get_all( function ( listings ) {
-
-		console.log('Got ' + Object.prototype.toString.apply( listings ) + ' of size ' + listings.length + ' listings from db');
-
-		async.map( listings, YQL.exec, function ( err, results ) {
-			for ( var i = 0, r = results.length; i < r; i++ ) {
-
-				var R = results[i];
-
-				console.log('Adding ' + R.length + ' results to ' + listings[i].name);
-				
-				ListingManager.add_results( listings[i]._id, R );
-
-				if ( callback && typeof(callback) === 'function' ) {
-					callback("OK\n");
-				}
-
-			}
-		});
-
-	});
-}
 
 
 http.createServer( app ).listen( app.get('port'), function(){
