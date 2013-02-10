@@ -137,10 +137,12 @@ block content
 									button.btn.btn-danger.pull-right.del
 										i.icon-remove
 									i.pull-right &nbsp;
-									button.btn.btn-info.pull-right.view
-										i.icon-list
-										small.results
-											ol.r_l.hide
+									div.btn-group.pull-right
+										button.btn.btn-success.new_results.view.hide
+										button.btn.disabled.view
+											i.icon-list
+											span.results(style="display: none")
+												ol.r_l.hide
 
 block script
 	script(src="js/bootstrap.min.js")

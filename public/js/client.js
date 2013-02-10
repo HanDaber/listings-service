@@ -18,9 +18,16 @@ $(function() {
             var $_elem = new_from_template( $_listing );
 
             $_elem.find('.name').append( '&nbsp; ' + obj.name );
-            $_elem.find('.results').append( '( ' + obj.results.length + ' )');
             $_elem.find('.min').append( obj.min );
             $_elem.find('.max').append( obj.max );
+
+            if ( obj.results.length > 0 ) {
+                $_elem.find('.view').removeClass('disabled');
+                // $_elem.find('.view').addClass('btn-success');
+                $_elem.find('.new_results').append( '' + obj.results.length + '');
+                $_elem.find('.new_results').removeClass('hide');
+            }
+            
 
             if ( obj.cities ) {
                 var $_cities = $_elem.find('.cities');

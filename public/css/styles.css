@@ -35,4 +35,5 @@ div#cities { border: 1px solid #bbb; display: inline-block; }*/
 .r_l li a { color: #ff0; }
 
 .results { display: inline-block; width: 3.5em; }
+button.new_results :hover { cursor: default; }
 #resultsModal { display: inline-block; }
