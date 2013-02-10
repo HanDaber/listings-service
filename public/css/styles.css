@@ -58,7 +58,7 @@ div#cities { border: 1px solid #bbb; display: inline-block; }*/
 .lead-sm { font-size: 1em; }
 .listings caption { margin-bottom: 2em; }
 
-.listing { background-color: rgba(50, 50, 50, .7); }
+.listing, li.active a { background-color: rgba(50, 50, 50, .7); }
 .listing .name { margin-top: 1px; }
 
 .r_l { font-size: 0.8em; }
@@ -71,6 +71,6 @@ button.new_results { cursor: default; margin-right: -0.5em; }
 button.view { z-index: 9; }
 #resultsModal { display: inline-block; }
 
-@media only screen and (max-device-width: 480px) {
-	.listing td { font-size: 0.6em; }
+@media (max-width: 480px) and (max-device-width: 480px) {
+	#main_table { font-size: 0.8em; width: 100%; }
 }
