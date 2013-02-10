@@ -43,8 +43,11 @@ exports.get_all_results = function ( user, callback ) {
 				var R = scraper_helper.build_results( L );
 
 				if ( R != null ) {
-					// exports.remove_results( L );
-					console.log('removed results from ' + L.name)
+					
+					console.log('removed results from ' + L.name);
+
+					exports.remove_results( L );
+					
 				}
 
 				return R;
