@@ -79,8 +79,8 @@ button.view { z-index: 9; }
 
 	body { padding: 0; }
 	
-	.listings { font-size: 0.8em; }
-
+	.listings { font-size: 0.75em; }
+/*
 	.btn {
 	  padding: 1px 8px;
 	  font-size: 1em;
@@ -100,5 +100,5 @@ button.view { z-index: 9; }
 	  -webkit-border-radius: 2px;
 	     -moz-border-radius: 2px;
 	          border-radius: 2px;
-	}
+	}*/
 }
