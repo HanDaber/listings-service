@@ -35,7 +35,6 @@ userModel.all(function ( users ) {
 			ListingManager.get_all_results( user, function ( results ) {
 
 				mail(user.email, results);
-				console.log(user.email + " sent:\n" + results)
 
 			});
 
