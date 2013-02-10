@@ -17,8 +17,9 @@ block content
 	div.container
 		div.row
 			div.span4.offset4
-				h3.title= locals.user.name + ' - Listing Manager '
-					span= '&#946;'
+				center
+					h3.title= locals.user.name + ' - Listing Manager '
+						span= '&#946;'
 
 		div.row
 			div.span4
@@ -40,7 +41,7 @@ block content
 								label
 									strong.lead.lead-sm Search keyword
 										small= " (required):"
-									input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
+									input.span4(type="text", name="listing_name", placeholder="keyword", autofocus)
 
 								select.span4(name="listing_type")
 									option(value='for sale', selected='selected')= 'for sale'
@@ -112,7 +113,7 @@ block content
 					thead.well.well-large
 						tr
 							th
-								p.lead &nbsp; Name
+								p.lead &nbsp; Keyword
 							th
 								p.lead Cities
 							th
@@ -135,18 +136,17 @@ block content
 								span= "$"
 								span.max
 
-							td.edit.span3
+							td.edit.span2
 								form.edit_listing(action="", method="")
-									input.listing_id(type='hidden', value='')
-									button.btn.btn-danger.pull-right.del
-										i.icon-remove
-									i.pull-right &nbsp;
 									div.btn-group.pull-right
-										button.btn.btn-info.new_results.view.hide
-										button.btn.btn-info.disabled.view
+										button.btn.new_results.view.btn-small.hide
+										button.btn.btn-inverted.disabled.view
 											i.icon-list
 											span.results(style="display: none")
 												ol.r_l.hide
+										input.listing_id(type='hidden', value='')
+										button.btn.btn-danger.pull-right.del
+											i.icon-remove
 
 block script
 	script(src="js/bootstrap.min.js")
