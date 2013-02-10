@@ -80,9 +80,9 @@ button.view { z-index: 9; }
 	body { padding: 0; }
 	
 	.listings { font-size: 0.75em; }
-/*
+
 	.btn {
-	  padding: 1px 8px;
+	  padding: 8px 7px 7px 7px;
 	  font-size: 1em;
 	  -webkit-border-radius: 3px;
 	     -moz-border-radius: 3px;
@@ -94,11 +94,12 @@ button.view { z-index: 9; }
 	  margin-top: 0;
 	}
 
+
 	.btn-small {
 	  padding: 1px 7px 1px 3px;
 	  font-size: 0.6em;
 	  -webkit-border-radius: 2px;
 	     -moz-border-radius: 2px;
 	          border-radius: 2px;
-	}*/
+	}
 }
