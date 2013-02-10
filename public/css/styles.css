@@ -28,6 +28,8 @@ background-color: #131313;
                  0 0 / 20px #131313;
 behavior: url(/pie/PIE.htc);
 
+overflow-x: hidden;
+
 }
 
 
@@ -52,6 +54,8 @@ div#cities { border: 1px solid #bbb; display: inline-block; }*/
 
 .center { display: inline-block; margin-left: auto; margin-right: auto; }
 
+.row { padding-left: 5px; padding-right: 5px; }
+
 .listings table { margin-top: 1.5em; }
 .listings table thead { background-color: rgba(60, 120, 200, .5); color: #000; }
 .lead { margin: 0; }
@@ -71,13 +75,15 @@ button.new_results { cursor: default; margin-right: -0.3em; }
 button.view { z-index: 9; }
 #resultsModal { display: inline-block; }
 
-@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+@media all and (max-width: 480px), all and (max-device-width: 480px) {
+
+	body { padding: 0; }
 	
-	#main_table { font-size: 0.8em; width: 80%; }
+	.listings { font-size: 0.8em; }
 
 	.btn {
-	  padding: 2px 10px;
-	  font-size: 11.9px;
+	  padding: 1px 8px;
+	  font-size: 1em;
 	  -webkit-border-radius: 3px;
 	     -moz-border-radius: 3px;
 	          border-radius: 3px;
@@ -89,10 +95,10 @@ button.view { z-index: 9; }
 	}
 
 	.btn-small {
-	  padding: 1px 6px;
-	  font-size: 10.5px;
-	  -webkit-border-radius: 3px;
-	     -moz-border-radius: 3px;
-	          border-radius: 3px;
+	  padding: 1px 7px 1px 3px;
+	  font-size: 0.6em;
+	  -webkit-border-radius: 2px;
+	     -moz-border-radius: 2px;
+	          border-radius: 2px;
 	}
 }
