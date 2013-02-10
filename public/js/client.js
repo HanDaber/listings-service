@@ -23,9 +23,9 @@ $(function() {
 
             if ( obj.results.length > 0 ) {
                 $_elem.find('.view').removeClass('disabled');
-                // $_elem.find('.view').addClass('btn-success');
-                $_elem.find('.new_results').append( '' + obj.results.length + '');
-                $_elem.find('.new_results').removeClass('hide');
+                $_elem.find('.view').addClass('btn-info');
+                $_elem.find('.new_results').append( obj.results.length );
+                $_elem.find('.new_results').addClass('disabled').removeClass('hide');
             }
             
 
