@@ -20,6 +20,8 @@ div#cities { border: 1px solid #bbb; display: inline-block; }*/
 	text-align: center;
 }*/
 
+.hint { color: #d66; font-size: 0.8em; }
+
 .center { display: inline-block; margin-left: auto; margin-right: auto; }
 
 .listings table { margin-top: 1.5em; }

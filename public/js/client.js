@@ -145,6 +145,7 @@ $(function() {
 
             window.setTimeout(function () {
                 container.html('thanks!<hr>').fadeIn();
+                $('#tab_pane .hint').fadeOut(300).html('');
             }, 500);
 
         });

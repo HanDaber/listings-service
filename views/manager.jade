@@ -29,6 +29,9 @@ block content
 							a(href="#new", data-toggle="tab")= "New Listing"
 						li
 							a(href="#admin", data-toggle="tab")= "Admin"
+								case locals.user.email
+									when ''
+										small.hint= " <-- add email addr to receive updates"
 
 					div.tab-content
 						div.tab-pane.active#new
