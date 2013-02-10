@@ -54,8 +54,6 @@ div#cities { border: 1px solid #bbb; display: inline-block; }*/
 
 .center { display: inline-block; margin-left: auto; margin-right: auto; }
 
-.row { padding-left: 5px; padding-right: 5px; }
-
 .listings table { margin-top: 1.5em; }
 .listings table thead { background-color: rgba(60, 120, 200, .5); color: #000; }
 .lead { margin: 0; }
@@ -78,11 +76,17 @@ button.view { z-index: 9; }
 @media all and (max-width: 480px), all and (max-device-width: 480px) {
 
 	body { padding: 0; }
+
+	.row { padding-left: 5px; padding-right: 5px; }
 	
 	.listings { font-size: 0.75em; }
 
+	.listing td { padding: 2px; margin: 0; }
+
+	h5.name { padding: 0; margin: 0; }
+
 	.btn {
-	  padding: 8px 7px 7px 7px;
+	  padding: 15px 9px 13px 9px;
 	  font-size: 1em;
 	  -webkit-border-radius: 3px;
 	     -moz-border-radius: 3px;
@@ -96,7 +100,7 @@ button.view { z-index: 9; }
 
 
 	.btn-small {
-	  padding: 1px 7px 1px 3px;
+	  padding: 2px 7px 1px 3px;
 	  font-size: 0.6em;
 	  -webkit-border-radius: 2px;
 	     -moz-border-radius: 2px;
