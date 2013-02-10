@@ -34,14 +34,18 @@ block content
 						div.tab-pane.active#new
 							form#add_listing(action="", method="", name="listings")
 
-								input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
+								label
+									strong.lead.lead-sm Search keyword
+										small= " (required):"
+									input.span4(type="text", name="listing_name", placeholder="listing name", autofocus)
 
 								select.span4(name="listing_type")
 									option(value='for sale', selected='selected')= 'for sale'
 									option(value='housing', disabled='disabled')= 'housing'
 								
 								label
-									strong Add cities to search
+									strong.lead.lead-sm Select cities to search for this listing
+										small= " (required):"
 									select.span4(name="listing_cities", multiple="multiple")
 										option(value='atlanta')= 'atlanta'
 										option(value='austin')= 'austin'
@@ -67,8 +71,11 @@ block content
 										option(value='sfbay')= 'sf bay area'
 										option(value='washingtondc')= 'washington dc'
 
-								input.span4(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
-								input.span4(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
+								label
+									strong.lead.lead-sm Add a price range
+										small= " (optional):"
+									input.span4(type="number", name="listing_min", placeholder="min. price", min="0", max="999999")
+									input.span4(type="number", name="listing_max", placeholder="max. price", min="0", max="999999")
 								input(type="hidden", name="user_id", value=locals.user._id)
 								center
 									button.btn.btn-success
@@ -97,22 +104,27 @@ block content
 
 				table.table.table-striped
 					caption
-						h4= "Your Listings"
-					thead
+						h3= "Listings"
+					thead.well.well-large
 						tr
-							th= "Name"
-							th= "Cities"
-							th= "Price Range"
-							th.pull-right= "Del"
+							th
+								p.lead &nbsp; Name
+							th
+								p.lead Cities
+							th
+								p.lead Price Range
+							th
+								p.lead 
+									center . . .
 					tbody
 						tr#roading
 
 						tr.listing.template
 							td.title.span2
-								h5.name
+								h5.name.lead.lead-sm
 							td.area
-								span.cities
-							td.price.span2
+								span.cities.lead.lead-sm
+							td.price.span2.lead.lead-sm
 								span= "$"
 								span.min
 								span= " - "
@@ -126,7 +138,7 @@ block content
 										i.icon-remove
 									i.pull-right &nbsp;
 									button.btn.btn-info.pull-right.view
-										i.icon-search
+										i.icon-list
 										small.results
 											ol.r_l.hide
 

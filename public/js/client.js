@@ -17,7 +17,7 @@ $(function() {
         'append': function( obj ) {
             var $_elem = new_from_template( $_listing );
 
-            $_elem.find('.name').append( obj.name );
+            $_elem.find('.name').append( '&nbsp; ' + obj.name );
             $_elem.find('.results').append( '( ' + obj.results.length + ' )');
             $_elem.find('.min').append( obj.min );
             $_elem.find('.max').append( obj.max );
@@ -101,11 +101,11 @@ $(function() {
 
         var new_listing = { 'user_id': uid, 'type': type, 'name': name, 'min': min, 'max': max, 'cities': cities };
 
-        $("tr#roading").html("<td colspan='4'><div class='alert'>Saving...</div></td>").fadeIn();
+        $("tr#roading").html("<td colspan='4'><div class='alert'>Saving...</div></td>").fadeIn(200);
 
         $.post("/api/listings", new_listing, function(data, textStatus, jqXHR) {
             console.log("Post resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
-            $('tr#roading').fadeOut().html('');
+            $('tr#roading').fadeOut(200).html('');
 
             manager.append( data );
         }).fail(function () {
@@ -113,7 +113,7 @@ $(function() {
             $("tr#roading").html("<td colspan='4'><div class='alert alert-error'>Error Saving...</div></td>");
 
             window.setTimeout(function () {
-                $('tr#roading').fadeOut().html('');
+                $('tr#roading').fadeOut(200).html('');
             }, 3000);
 
         });
