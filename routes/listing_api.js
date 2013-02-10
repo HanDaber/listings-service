@@ -97,7 +97,7 @@ exports.create = function (req, res) {
 		res.end();
 	} else {
 
-		var type = (req.body.type === '') ? 'for sale' : req.body.type;
+		var type = (req.body.type === '') ? 'sss' : req.body.type;
 		var min = (req.body.min === '') ? '0' : req.body.min;
 		var max = (req.body.max === '') ? '2500' : req.body.max;
 		

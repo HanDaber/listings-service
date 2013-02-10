@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
 // ######## LISTING #######################################################
 // Define listing properties
 var listing_properties = {
-  	'type' : { type: String, default: 'for sale' },
+  	'type' : { type: String, default: 'sss' },
 	'name' : { type: String, default: 'none' },
 	'min' : { type: Number, default: 0 },
 	'max' : { type: Number, default: 2500 },
@@ -19,8 +19,7 @@ var listing_properties = {
 var listing_methods = {
 
 	'category': function() {
-		if( this.type === 'housing' ) { return 'hhh'; }
-		else { return 'sss'; }
+		return this.type;
 	}
 
 };
