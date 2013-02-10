@@ -72,5 +72,5 @@ button.view { z-index: 9; }
 #resultsModal { display: inline-block; }
 
 @media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
-	#main_table { font-size: 0.8em; width: 80%; float: left; }
+	#main_table { font-size: 0.8em; width: 80%; }
 }
