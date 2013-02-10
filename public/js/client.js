@@ -60,7 +60,7 @@ $(function() {
         var options = $_elem.find( "select[name=listing_cities]" ).children('option');
         
         options.each(function (opt) {
-            $(this).context.selected = false;
+            // $(this).context.selected = false;
         });
 
         var user_id = $_elem.find( "input[name=user_id]" ).val();
