@@ -71,6 +71,6 @@ button.new_results { cursor: default; margin-right: -0.5em; }
 button.view { z-index: 9; }
 #resultsModal { display: inline-block; }
 
-@media (max-width: 480px) and (max-device-width: 480px) {
-	#main_table { font-size: 0.8em; width: 100%; }
+@media (max-width: 480px) or (max-device-width: 480px) {
+	#main_table { font-size: 0.8em; width: 100%; float: left; }
 }
