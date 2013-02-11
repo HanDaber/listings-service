@@ -86,11 +86,15 @@ $(function() {
         user_id = listing_form.find('input[name=user_id]').val();
 
 
+    $('#main_table').find('h3').html('<blink>Loading</blink> Listings...');
+
     $.get("/api/listings/" + user_id, function(data, textStatus, jqXHR) {
         //console.log("Get resposne:"); console.dir(data); console.log(textStatus); console.dir(jqXHR);
         for( key in data ) {
             manager.append( data[key] );
         }
+
+        $('#main_table').find('h3').html('Listings:');
     });
 
 	listing_form.find('button').on('click', function( event ) {
