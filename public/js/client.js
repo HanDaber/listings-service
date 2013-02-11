@@ -26,6 +26,7 @@ $(function() {
                 $_elem.find('.view').addClass('btn-info');
                 $_elem.find('.new_results').append( obj.results.length );
                 $_elem.find('.new_results').addClass('disabled').removeClass('hide');
+                $_elem.find('.icon-forward').removeClass('hide');
             }
             
 
@@ -121,7 +122,7 @@ $(function() {
             manager.append( data );
         }).fail(function () {
 
-            $("tr#roading").html("<td colspan='4'><div class='alert alert-error'>Error Saving...</div></td>");
+            $("tr#roading").html("<td colspan='4'><div class='alert alert-error'>Ah pooped m'pants...</div></td>");
 
             window.setTimeout(function () {
                 $('tr#roading').fadeOut(200).html('');
@@ -185,20 +186,27 @@ $(function() {
             
             event.preventDefault();
 
+            if ($(this).hasClass('disabled')) return;
+
             var this_listing = $(this).parents('tr'),
                 toitle = this_listing.find('.name').html(),
                 links = this_listing.find('.r_l');
 
-            $('#resultsModal').html( toitle + ' - <em>latest results:</em>' );
+            var _id = $(this).attr('id');
+            console.log(_id)
 
-            links.clone().removeClass('hide').appendTo('#results_modal_list');
+            $.get('/api/mail/' + _id, function () {
 
-            $('#results_modal').modal('show');
+                this_listing.find('.new_results').fadeOut(800);
+                this_listing.find('.icon-forward').fadeOut(800);
+
+                setTimeout(function () {
+                    this_listing.find('.view').addClass('disabled').removeClass('btn-info');
+                }, 800);
+
+            });
+
         });
-
-    $('#results_modal').on('hidden', function () {
-        $('#results_modal_list').html( '' );
-    });
 
     $('#are_you_cool').on('click', 'button', function ( ev ) {
 

@@ -10,7 +10,7 @@ var express = require('express'),
     routes = require('./routes'),
     ListingManager = require('./routes/listing_api'),
     UserManager = require('./routes/user_api'),
-    Scraper = require('./scraper_modules/scraper');
+    Mailer = require('./scraper_modules/mailer');
 
 // Configure express
 var app = express();
@@ -39,7 +39,7 @@ app.get( '/', routes.index );
 // REST API
 // app.get( '/api', ListingManager.test );
 
-// All listings
+// All listings for User
 app.get( '/api/listings/:user_id', ListingManager.all );
 
 // Single listing
@@ -53,6 +53,15 @@ app.post( '/api/listings', ListingManager.create );
 
 // Delete one listing
 app.post( '/api/listings/:id', ListingManager.destroy );
+
+// Email one Listing
+app.get( '/api/mail/:id', ListingManager.pipe_results, UserManager.pipe_email, function (req, res) {
+	var mail = new Mailer('handaber@gmail.com', '!6infuckinsaniuM9');
+	mail( req.email, req.results );
+
+	res.writeHead(200, {'Content-Type': 'text/plain'});
+	res.end();
+});
 
 
 app.get( '/:name', UserManager.manager );

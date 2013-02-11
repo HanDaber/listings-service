@@ -76,6 +76,35 @@ exports.get_all_results = function ( user, callback ) {
 
 };
 
+
+exports.pipe_results = function (req, res, next) {
+
+	var listing_id = req.params.id;
+
+	return listingModel.findById( listing_id, function (err, listing) {
+		if (!err) {
+
+			req.results = scraper_helper.build_results( listing );
+			
+			req.user_id = listing.user_id;
+
+			if ( req.results != null ) {
+				
+				console.log('removed results from ' + listing.name);
+
+				exports.remove_results( listing );
+				
+			}
+
+			next();
+
+		} else {
+			console.log(err);
+		}
+	});
+};
+
+
 exports.find = function (req, res) {
 
 	return listingModel.findById(req.params.id, function (err, listing) {

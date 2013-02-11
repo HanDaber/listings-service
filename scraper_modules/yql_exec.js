@@ -48,14 +48,14 @@ exports.exec = function ( listing, callback ) {
         opts = "&format=json&env=store://datatables.org/alltableswithkeys&callback=";
 
         
-                                                                console.log('query: ' + query + '\n');
+                                                                console.log('query: ' + query );
 
 
     var uri = "" + base + encodeURIComponent(table) + encodeURIComponent(query) + opts;
     // var uri = "" + base + encodeURIComponent(table) + encodeURIComponent(query) + opts;
 
     var options = {
-        host: 'query.yahooapis.com',
+        host: "query.yahooapis.com",
         path: uri
     };
 

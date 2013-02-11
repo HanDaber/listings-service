@@ -1,19 +1,6 @@
 extends layout
 
 block content
-
-	div#results_modal.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="resultsModal", aria-hidden="true")
-		div.modal-header
-			h3#resultsModal
-			button.btn.btn-danger.pull-right(class="btn", data-dismiss="modal", aria-hidden="true") close
-		div.modal-body
-			div#results_modal_list
-		div.modal-footer
-			div &nbsp;
-
-
-
-
 	div.container
 		div.row
 			div.span4.offset4
@@ -140,7 +127,8 @@ block content
 									div.btn-group.pull-right
 										button.btn.new_results.view.btn-small.hide
 										button.btn.btn-inverted.disabled.view
-											i.icon-list
+											i.icon-forward.hide
+											i.icon-envelope
 											span.results(style="display: none")
 												ol.r_l.hide
 										input.listing_id(type='hidden', value='')

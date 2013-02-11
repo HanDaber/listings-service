@@ -22,6 +22,8 @@ exports.manager = function(req, res) {
 				res.redirect('/');
 
 			} else {
+
+				user.name = user.name.charAt(0).toUpperCase() + user.name.slice(1);
 		
 				res.render('manager', { locals: {
 					'user': user 
@@ -34,9 +36,23 @@ exports.manager = function(req, res) {
 	});
 };
 
+
+exports.pipe_email = function (req, res, next) {
+	return userModel.findById( req.user_id, function ( err, user ) {
+		if(!err) {
+			req.email = user.email;
+
+			next();
+		} else {
+			console.log(err)
+		}
+	});
+};
+
+
 exports.update_email = function ( req, res ) {
 
-	console.log(req.body, req.params)
+	// console.log(req.body, req.params)
 	
 	var email = req.body.email,
 		user_id = req.params.user_id;
@@ -48,13 +64,13 @@ exports.update_email = function ( req, res ) {
 		return user.save(function (err) {
 			if (!err) {
 
-				console.log('updated user ' + user.email)
+				// console.log('updated user ' + user.email)
 				res.send(user.email);
 
 			} else {
 				console.log(err);
 			}
-			console.dir(user)
+			// console.dir(user)
 		});
 	});
 };
