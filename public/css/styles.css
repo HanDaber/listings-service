@@ -1,5 +1,5 @@
 body {
-background: -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
+/*background: -webkit-linear-gradient(63deg, #151515 5px, transparent 5px) 0 5px,
             -webkit-linear-gradient(243deg, #151515 5px, transparent 5px) 10px 0px,
             -webkit-linear-gradient(63deg, #222 5px, transparent 5px) 0px 10px,
             -webkit-linear-gradient(243deg, #222 5px, transparent 5px) 10px 5px,
@@ -26,8 +26,8 @@ background-color: #131313;
                  linear-gradient(90deg, #1b1b1b 10px, transparent 10px) 0 0 / 20px,
                  linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424)
                  0 0 / 20px #131313;
-behavior: url(/pie/PIE.htc);
-
+behavior: url(/pie/PIE.htc);*/
+background-image:url('http://www.languageisavirus.com/twitter-backgrounds/gothic/universe_structWF2.jpg');
 overflow-x: hidden;
 
 }
