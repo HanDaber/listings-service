@@ -52,6 +52,8 @@ userModel.all(function ( users ) {
 
 });
 
+mail('handaber@gmail.com', 'Scraper Done Ran, Son... ' + new Date());
+
 
 // ListingManager.get_all_results(function ( results ) {
 

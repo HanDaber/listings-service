@@ -70,7 +70,7 @@ exports.exec = function ( listing, callback ) {
         //the whole response has been recieved, so we just print it out here
         response.on('end', function () {
 
-            var obj = JSON.parse(str),
+            var obj = JSON.parse(str) || {},
                 res = [];
 
             if ( obj.query ) {
