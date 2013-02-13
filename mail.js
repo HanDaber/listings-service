@@ -1,18 +1,3 @@
-/*
-
-App:
-	Server:
-		Listings
-		Results
-		User
-		Scraper:
-		Mailer:
-	Client:
-		Manager:
-
-*/
-
-
 // require
 var Mailer = require('./scraper_modules/mailer'),
 	fn = require('underscore'),
@@ -50,7 +35,7 @@ userModel.all(function ( users ) {
 
 		db.connection.close();
 
-	}, 1000);
+	}, 500);
 
 });
 

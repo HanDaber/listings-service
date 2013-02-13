@@ -32,7 +32,7 @@ listingSchema.methods = listing_methods;
 // Define Listing Model from schema
 var listingModel = mongoose.model( 'Listing', listingSchema );
 
-listingModel.connection = mongoose.connection;
+// listingModel.connection = mongoose.connection;
 
 module.exports = listingModel;
 

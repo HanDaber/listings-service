@@ -34,7 +34,7 @@ exports.get_all_results = function ( user, callback ) {
 
 	var uid = user._id;
 
-	listingModel.find({ 'user_id': uid }, function (err, listings) {
+	return listingModel.find({ 'user_id': uid }, function (err, listings) {
 
 		if (!err) {
 
@@ -195,33 +195,33 @@ exports.remove_results = function ( listing ) {
 
 exports.add_results = function (listing_id, results) {
 
-	listingModel.findById( listing_id, function (err, listing) {
+	if ( results.length > 0 ) {
 
-		if ( results.length > 0 ) {
+		return listingModel.findById( listing_id, function (err, listing) {
 
-				u.each(results, function( R ) {
-					console.log('Adding Result from: ' + R.item.date); // .replace('T', ' ').substring(0, R.item.date.length - 6)
-					listing.results.push( {
-						link: R.item.link,
-						title: R.item.title,
-						date: R.item.date
-					} );
-				});
-		}
+			u.each(results, function( R ) {
+				console.log('Adding result to #' + listing._id); // .replace('T', ' ').substring(0, R.item.date.length - 6)
+				listing.results.push( {
+					link: R.item.link,
+					title: R.item.title,
+					date: R.item.date
+				} );
+			});
 
-		listing.last_scraped = scraper_helper.right_now();
+			listing.last_scraped = scraper_helper.right_now();
 
+			listing.save(function (err) {
+				if (!err) {
+					console.log( 'Added ' + results.length + ' results to #' + listing._id + ' at ' + listing.last_scraped );
+				} else {
+					console.log(err);
+				}
+			});
 
-		return listing.save(function (err) {
-			if (!err) {
-				console.log( 'Scraped ' + listing.name + ' successfully at ' + listing.last_scraped );
-			} else {
-				console.log(err);
-			}
 		});
-
-	});
-
+	} else {
+		console.log('No results')
+	}
 };
 
 exports.destroy = function (req, res) {

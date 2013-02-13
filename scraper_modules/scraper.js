@@ -1,5 +1,5 @@
 var async = require('async'),
-    db = require('../db'),
+    // db = require('../db'),
     ListingManager = require('../routes/listing_api'),
     YQL = require('./yql_exec');
 
@@ -19,24 +19,24 @@ function Scrape ( callback ) {
 
 				var R = results[i];
 
-				console.log('Adding ' + R.length + ' results to ' + listings[i].name);
+				console.log('Adding ' + R.length + ' results to listing #' + listings[i]._id);
 				
 				ListingManager.add_results( listings[i]._id, R );
 
 			}
+
+			// setTimeout(function () {
+
+				// console.log(db.connection.close);
+				// db.disconnect();
+
+			// }, 5000);
 
 			if ( callback && typeof(callback) === 'function' ) {
 					
 				callback( results );
 
 			}
-
-			console.log('closing db connection in 3 sec...')
-			setTimeout(function () {
-
-				db.connection.close();
-
-			}, 3000);
 		});
 
 	});
