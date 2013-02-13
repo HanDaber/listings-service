@@ -58,14 +58,11 @@ exports.get_all_results = function ( user, callback ) {
 
 			if ( results.length > 0 ) {
 
-				// console.log('found results..')
 				callback( results );
 
 			} else {
 
 				console.log('no new results found.')
-
-				// listingModel.connection.close();
 			}
 
 		} else {
@@ -74,6 +71,39 @@ exports.get_all_results = function ( user, callback ) {
 
 	});
 
+};
+
+exports.add_results = function (listing_id, results) {
+
+	if ( results.length > 0 ) {
+
+		return listingModel.findById( listing_id, function (err, listing) {
+
+			u.each(results, function( R ) {
+				// console.dir(R)
+				console.log('Adding result to #' + listing._id); // .replace('T', ' ').substring(0, R.item.date.length - 6)
+				listing.results.push( {
+					link: R.item.link,
+					title: R.item.title[0],
+					date: R.item.date,
+					desc: R.item.description
+				} );
+			});
+
+			listing.last_scraped = scraper_helper.right_now();
+
+			listing.save(function (err) {
+				if (!err) {
+					console.log( 'Added ' + results.length + ' results to #' + listing._id + ' at ' + listing.last_scraped );
+				} else {
+					console.log(err);
+				}
+			});
+
+		});
+	} else {
+		console.log('No results')
+	}
 };
 
 
@@ -192,37 +222,6 @@ exports.remove_results = function ( listing ) {
 
 };
 
-
-exports.add_results = function (listing_id, results) {
-
-	if ( results.length > 0 ) {
-
-		return listingModel.findById( listing_id, function (err, listing) {
-
-			u.each(results, function( R ) {
-				console.log('Adding result to #' + listing._id); // .replace('T', ' ').substring(0, R.item.date.length - 6)
-				listing.results.push( {
-					link: R.item.link,
-					title: R.item.title,
-					date: R.item.date
-				} );
-			});
-
-			listing.last_scraped = scraper_helper.right_now();
-
-			listing.save(function (err) {
-				if (!err) {
-					console.log( 'Added ' + results.length + ' results to #' + listing._id + ' at ' + listing.last_scraped );
-				} else {
-					console.log(err);
-				}
-			});
-
-		});
-	} else {
-		console.log('No results')
-	}
-};
 
 exports.destroy = function (req, res) {
 

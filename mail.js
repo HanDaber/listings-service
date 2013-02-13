@@ -7,9 +7,7 @@ var Mailer = require('./scraper_modules/mailer'),
 
 var result_count = 0;
 
-// initialize
 var mail = new Mailer('handaber@gmail.com', '!6infuckinsaniuM9');
-
 
 userModel.all(function ( users ) {
 
@@ -40,19 +38,4 @@ userModel.all(function ( users ) {
 });
 
 mail('handaber@gmail.com', 'Scraper Done Ran, Son... \n' + ' ( ' + result_count + ' ) results sent...\n' + new Date());
-
-
-// ListingManager.get_all_results(function ( results ) {
-
-// 	mail(results);
-	
-// 	setTimeout(function () {
-
-// 		db.connection.close();
-
-// 	}, 1000);
-
-// });
-
-
 
