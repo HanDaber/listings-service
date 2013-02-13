@@ -59,7 +59,7 @@ exports.get_all_results = function ( user, callback ) {
 			if ( results.length > 0 ) {
 
 				// console.log('found results..')
-				callback( results.join('') );
+				callback( results );
 
 			} else {
 
