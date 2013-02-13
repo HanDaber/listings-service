@@ -31,11 +31,12 @@ function Scrape ( callback ) {
 
 			}
 
+			console.log('closing db connection in 3 sec...')
 			setTimeout(function () {
 
 				db.connection.close();
 
-			}, 1000);
+			}, 3000);
 		});
 
 	});
