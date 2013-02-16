@@ -34,7 +34,7 @@ function list ( arr ) {
 
 exports.exec = function ( listing, callback ) {
 
-    // console.log('YQL.exec(\n' + listing + '\n)');
+    console.log('YQL.exec(' + listing.name + ')');
 
     var keyword = listing.name,
         max_price = listing.max,
@@ -47,12 +47,8 @@ exports.exec = function ( listing, callback ) {
         query = "select item from listings where location in (" + list(cities) + ") and type=\"sss\" and query=\"" + keyword + "\" and minAsk=\"" + min_price + "\" and maxAsk=\"" + max_price + "\" and item.date > \"" + last_scraped + "\" limit 100",
         opts = "&format=json&env=store://datatables.org/alltableswithkeys&callback=";
 
-        
-                                                                console.log('query: ' + query );
-
 
     var uri = "" + base + encodeURIComponent(table) + encodeURIComponent(query) + opts;
-    // var uri = "" + base + encodeURIComponent(table) + encodeURIComponent(query) + opts;
 
     var options = {
         host: "query.yahooapis.com",

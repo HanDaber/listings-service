@@ -38,29 +38,7 @@ block content
 									strong.lead.lead-sm Select cities to search for this listing
 										small= " (required):"
 									select.span4(name="listing_cities", multiple="multiple")
-										option(value='atlanta')= 'atlanta'
-										option(value='austin')= 'austin'
-										option(value='boston')= 'boston'
-										option(value='chicago')= 'chicago'
-										option(value='dallas')= 'dallas'
-										option(value='denver')= 'denver'
-										option(value='detroit')= 'detroit'
-										option(value='houston')= 'houston'
-										option(value='lasvegas')= 'las vegas'
-										option(value='losangeles')= 'los angeles'
-										option(value='miami')= 'miami'
-										option(value='minneapolis')= 'minneapolis'
-										option(value='newyork')= 'new york'
-										option(value='orangecounty')= 'orange county'
-										option(value='philadelphia')= 'philadelphia'
-										option(value='phoenix')= 'phoenix'
-										option(value='portland')= 'portland'
-										option(value='raleigh')= 'raleigh'
-										option(value='sacramento')= 'sacramento'
-										option(value='sandiego')= 'san diego'
-										option(value='seattle')= 'seattle'
-										option(value='sfbay')= 'sf bay area'
-										option(value='washingtondc')= 'washington dc'
+										include states
 
 								label
 									strong.lead.lead-sm Add a price range

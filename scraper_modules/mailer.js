@@ -12,7 +12,7 @@ function Mailer ( email, pass ) {
             to: address, // list of receivers
             subject: "latest scrape results", // Subject line
             text: "Hello", // plaintext body
-            html: "<div><h2>listings-service scrape results</h2><hr>"+body+"</div>" // html body
+            html: "<div>" + body + "</div>" // html body
         };
 
         // send mail with defined transport object

@@ -9,7 +9,6 @@ Scraper.scrape(function ( results ) {
 		db.connection.close();
 
 		http_req('http://listings-service.herokuapp.com', function ( resp ) {
-			console.log(resp)
-		});
-	}, 500);
+			console.log(resp) }); },
+	500);
 });

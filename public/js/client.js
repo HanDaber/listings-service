@@ -98,6 +98,7 @@ $(function() {
         $('#main_table').find('h3').html('Listings:');
     });
 
+
 	listing_form.find('button').on('click', function( event ) {
     	
     	event.preventDefault();

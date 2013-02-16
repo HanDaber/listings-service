@@ -7,7 +7,7 @@ var Mailer = require('./scraper_modules/mailer'),
 
 var result_count = 0;
 
-var mail = new Mailer('handaber@gmail.com', '!6infuckinsaniuM9');
+var mail = new Mailer(																																																																	'handaber@gmail.com', '!6infuckinsaniuM9');
 
 userModel.all(function ( users ) {
 
@@ -17,7 +17,10 @@ userModel.all(function ( users ) {
 
 			ListingManager.get_all_results( user, function ( results ) {
 
-				mail(user.email, results.join(''));
+				var body = '<h2>Latest scrape results:</h2><h3>Manage your listings at <a href="http://www.listings-app.com/' + user.name + '">listings-app.com/' + user.name + '</a></h3><hr>';
+				body += results.join('');
+
+				mail(user.email, body);
 
 				result_count += results.length;
 
