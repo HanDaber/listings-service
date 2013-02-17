@@ -27,7 +27,7 @@ background-color: #131313;
                  linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424)
                  0 0 / 20px #131313;
 behavior: url(/pie/PIE.htc);*/
-background-image:url('http://www.languageisavirus.com/twitter-backgrounds/gothic/universe_structWF2.jpg');
+background-image:url('/img/bg.jpg');
 overflow-x: hidden;
 
 }
@@ -50,17 +50,19 @@ div#cities { border: 1px solid #bbb; display: inline-block; }*/
 	text-align: center;
 }*/
 
-.hint { color: #d66; font-size: 0.8em; }
+.splash .well { background-color: rgba(60, 120, 100, .2); }
+
+.hint { color: #f66; font-size: 0.9em; font-weight: 600; margin-left: 0.5em; padding-right: 0.5em; }
 
 .center { display: inline-block; margin-left: auto; margin-right: auto; }
 
 .listings table { margin-top: 1.5em; }
-.listings table thead { background-color: rgba(60, 120, 200, .5); color: #000; }
+.listings table thead { background-color: rgba(30, 80, 200, .5); color: #000; }
 .lead { margin: 0; }
 .lead-sm { font-size: 1em; }
 .listings caption { margin-bottom: 2em; }
 
-.listing, li.active a { background-color: rgba(50, 50, 50, .7); }
+.listing, li.active a { background-color: rgba(50, 50, 50, .2); }
 .listing .name { margin-top: 1px; }
 
 .r_l { font-size: 0.8em; }
