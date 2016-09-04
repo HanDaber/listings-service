@@ -62,7 +62,7 @@ app.post( '/api/listings/:id', ListingManager.destroy );
 
 // Email one Listing
 app.get( '/api/mail/:id', ListingManager.pipe_results, UserManager.pipe_email, function (req, res) {
-	var mail = new Mailer(                                                                                                             'handaber@gmail.com', '!6infuckinsaniuM9');
+	var mail = new Mailer('listingsservice@gmail.com', '123demo123');
 	mail( req.email, req.results );
 
 	res.writeHead(200, {'Content-Type': 'text/plain'});

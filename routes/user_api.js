@@ -91,7 +91,7 @@ exports.find_or_create = function ( req, res ) {
 
 	var name = req.params.name,
 		key = req.body.key,
-		mykey = 'balls ' +  new Date().getDate();
+		mykey = 'demo';
 
 	return userModel.findOne({ 'name': name }, function ( err, user ) {
 		
